@@ -4,28 +4,72 @@ The purpose of this document is to provide guidelines for writing CSS. Code conv
 
 We've borrowed some ideas from [Idiomatic CSS](https://github.com/necolas/idiomatic-css) and credited it throughout the document.
 
+The architecture itself is based on [OOCSS](https://github.com/stubbornella/oocss/wiki). Class naming conventions are from Harry Roberts’ post on [Namespacing CSS](http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces), incorporating aspects of [BEM](https://en.bem.info/), [SMACSS](https://smacss.com/), and [SUIT](https://github.com/suitcss/suit). 
+
+
+
 ### Class Names
 
-Class names should be camel case, with no dashes or underscores.
+BEM convention uses different delimiters to make it easier to understand the role of an element.
 
-```css
-/* Good - Use camel case */
-.thisIsGood {}
-
-/* Bad - don't use underscores */
-.this_is_bad {}
-
-/* Bad - don't use dashes */
-.this-is-bad {}
-```
-
-### Indentation
-
-Each indentation level is made up of four spaces. Do not use tabs. (Please set your editor to use four spaces)
+A **Block** (The parent element in an object or component) uses hyphens between words. Prefix all class names with the first letter of their type: o- Object, c- Component, l-Layout, u- Utility. See the [README](https://github.com/vhl/music/blob/library/app/assets/stylesheets/music/README.md) in the music gem library for more details.
 
 ```css
 /* Good */
-.stubbornella {
+.o-list-inline {}
+.o-list-inline__list-item {}
+.c-list-inline--boxy {}
+
+/* Bad - don't use unprefixed */
+.list-inline
+
+/* Bad - don't use camel case*/
+.u-pullLeft {}
+
+/* Bad - don't use single underscores */
+.c-list_inline {}
+```
+
+**Elements** are subclasses, or variants, of a component. They add a suffix to the base name, separated by double hyphens.
+
+```css
+/* Good */
+.c-list-inline--boxy
+
+/* Bad - don't blur distinction between block and modifier */
+.c-list-inline-boxy
+```
+
+**Modifiers** are subclasses, or variants, of a component. They add a suffix to the base name, separated by double hyphens.
+
+```css
+/* Good */
+.c-list-inline--boxy
+
+/* Bad - don't blur distinction between block and modifier */
+.c-list-inline-boxy
+```
+
+When extending a component and styling the inner elements, use the base component's inner elements' class name for styling, instead of extending the class names of the inner elements as well.
+
+```css
+
+/* Good - modifiers (subclasses) of components refer to unmodified inner element's names */
+.c-list-inline--boxy > .o-list-inline__list-item
+
+/* Bad - don't modify inner element's names */
+.c-list-inline--boxy > .c-list-inline__list-item--boxy {}
+```
+
+
+
+### Indentation
+
+Each indentation level is made up of two spaces. Do not use tabs. (Please set your editor to use two spaces)
+
+```css
+/* Good */
+.c-message {
     color: #fff;
     background-color: #000;
 }
@@ -92,7 +136,7 @@ Each property must be on its own line and indented one level. There should be no
 
 ### Using CSS Preprocessors
 
-Keep nesting to 3 levels deep. 
+Keep nesting to 2 levels deep, 3 absolute max.
 
 ```scss
 /* Good */
@@ -103,10 +147,6 @@ Keep nesting to 3 levels deep.
         .title {
          ....
 
-            .subtxt {
-            ...
-
-            }
         }
     }
 }
@@ -122,10 +162,6 @@ Keep nesting to 3 levels deep.
             .subtxt {
                 ...
 
-                .element {
-                    ...
-
-                }
             }
         }
     }
@@ -193,7 +229,7 @@ background: linear-gradient(...); /* W3C */
 Suffix fallback with “Old browsers” and standard property with “W3C”. Add a plus or minus to indicate that a property applies to all previous browsers by the same vendor or all future browsers by the same vendor.
 Using !important
 
-Do not use !important on CSS properties. The only time this is allowed is in a global style (provided by Core team).
+Do not use !important on CSS properties. The only time this is allowed is in a u- utility style (provided by Core team).
 
 ```css
 /* Good */
@@ -209,7 +245,7 @@ Do not use !important on CSS properties. The only time this is allowed is in a g
 
 ### Font Sizing
 
-All font sizes must be specified using rem only with a pixel fall back. Do not use percentages, ems or pixels alone.
+All font sizes must be specified using rem only. Do not use percentages, ems or pixels.
 
 ```css
 /* Good */
@@ -373,42 +409,42 @@ span.buttonAsLink {}
 span.buttonAsLink {}
 ```
 
-### Scoped styles
+### Component Elements
 
-All selectors for a particular component start with the wrapper class name.
+Use single, name-qualified selectors when styling component elements--don't use compound selectors, which will increase specificity.
 
 ```css
 /* Good */
-.calloutButton {
-   color: blue;
-}
-.calloutButton span {
-   color: green;
-}
+.c-tabset__tab {}
 
-/* Bad - second rule missing scope */
-.calloutButton {
-   color: blue;
-}
-span {
-   color: green;
-}
+/* Bad - not necessary; child class is unique enough. */
+.c-tabset > .c-tabset__tab
 ```
 
-### JavaScript Dependence
+### Classnames in HTML
 
-All rules should be coded to expect JavaScript to be enabled. Rules that apply when JavaScript is disabled should be preceded by the noJS class.
+Order classnames in a class attribute by order of object inheritance for understandability (functionally, the order of classnames in HTML makes no difference). Separate multiple classes with TWO spaces for scannability.
 
-```css
-/* Good */
-.noJS .calloutContent {
-   display: block;
-}
+```html
+<!-- Good -->
+<div class="c-tutorial-nav  u-pull-left">
 
-/* Bad - don't use .js */
-.js .calloutContent{
-   display: none;
-}
+<!-- Bad - don't use single space -->
+<div class="c-tutorial u-pull-left">
+
+
+### JavaScript and Test Dependence
+
+If an item is manipulated by Javascript, it should be have a js- class purposes of selecting that element. Javascript should not query elements by any other classes.
+
+```js
+<!-- Good -->
+<div class="c-tabset  js-tabset">
+<script> tabset = $('.js-tabset'); </script>
+
+<!-- Bad: -->
+<div class="c-tabset">
+<script> tabset = $('.c-tabset'); </script>
 ```
 
 ### :hover and :focus
@@ -444,8 +480,6 @@ Selectors should never use HTML element IDs. Always use classes for applying sty
 }
 ```
 
-The author field should contain the username of the person who first created the file. Subsequent authors or primary maintainers may also choose to add their name. The browsers in which this file was tested should be listed next to @tested.
-
 ### Width and height on components
 
 No heights on anything that contains text. Components should be flexible and their widths should be controlled by grids.
@@ -466,59 +500,36 @@ No heights on anything that contains text. Components should be flexible and the
 }
 ```
 
-### Naming classes
-
-When labelling elements within a component with a class, try to avoid generic classes like ``.inner``, ``.hd``, ``.bd``. Instead, prefix the class name with the name of the component. This is to avoid CSS getting overwritten when classes are too generic.
-
-```css
-/* Good */
-.boxHd {
-    background: #ccc;
-}
-.boxBd {
-    background: #ccc;
-}
-
-/* Bad */
-.box .hd {
-    background: #ccc;
-}
-.box .bd  {
-    background: #ccc;
-}
-```
-
-However when extending a component and styling the inner elements, try to use the base component's inner elements' class name for styling, instead of extending the class names of the inner elements as well.
-
-```css
-/* Good */
-.boxSimple .boxHd {
-    background: #ccc;
-}
-.boxSimple .boxBd {
-    background: #ccc;
-}
-
-/* Avoid this if possible */
-.boxSimple .boxSimpleHd {
-    background: #ccc;
-}
-```
-
 
 ### Comments
 
-We follow the commenting guideline from [Idiomatic CSS] (https://github.com/necolas/idiomatic-css#comments) with the following exception:
-* Place comment on the same line as the CSS declaration it's related to.
-
-Also, add file-level comments at the top of every CSS file, describing the file in the following format:
+We follow the commenting guideline from [Idiomatic CSS] (https://github.com/necolas/idiomatic-css#comments):
 
 ```css
+/* ==========================================================================
+   Section comment block
+   ========================================================================== */
+
+/* Sub-section comment block
+   ========================================================================== */
+
 /**
-* @desc         Description of the file.
-* @name         Simple name for the file (i.e., Search_Widget)
-* @author       username
-* @tested       browsers
-* @requires     helpers.css (tied to the @name of another file)
-*/
+ * Short description using Doxygen-style comment format
+ *
+ * The first sentence of the long description starts here and continues on this
+ * line for a while finally concluding here at the end of this paragraph.
+ *
+ * The long description is ideal for more detailed explanations and
+ * documentation. It can include example HTML, URLs, or any other information
+ * that is deemed necessary or useful.
+ *
+ * @tag This is a tag named 'tag'
+ *
+ * TODO: This is a todo statement that describes an atomic task to be completed
+ *   at a later date. It wraps after 80 characters and following lines are
+ *   indented by 2 spaces.
+ */
+
+/* Basic comment */
 ```
+
