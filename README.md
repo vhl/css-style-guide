@@ -75,7 +75,7 @@ Each indentation level is made up of two spaces. Do not use tabs. (Please set yo
 }
 
 /* Bad - all on one line */
-.stubbornella {color: #fff; background-color: #000;}
+.c-message {color: #fff; background-color: #000;}
 ```
 
 Rules inside of `@media` must be indented an additional level.
@@ -83,7 +83,7 @@ Rules inside of `@media` must be indented an additional level.
 ```css
 /* Good */
 @media screen and (max-width:480px) {
-   .stubbornella {
+   .c-message {
        color: green;
    }
 }
@@ -95,17 +95,17 @@ The opening brace should be on the same line as the last selector in the rule an
 
 ```css
 /* Good */
-.stubbornella {
+.c-description {
     color: #fff;
 }
 
 /* Bad - closing brace is in the wrong place */
-.stubbornella {
+.c-description {
     color: #fff;
     }
 
 /* Bad - opening brace missing space */
-.stubbornella{
+.c-description{
     color: #fff;
 }
 ```
@@ -116,19 +116,19 @@ Each property must be on its own line and indented one level. There should be no
 
 ```css
 /* Good */
-.stubbornella {
+.c-story {
     background-color: blue;
     color: red;
 }
 
 /* Bad - missing spaces after colons */
-.stubbornella {
+.c-story {
     background-color:blue;
     color:red;
 }
 
 /* Bad - missing last semicolon */
-.stubbornella {
+.c-story {
     background-color: blue;
     color:red
 }
@@ -193,7 +193,7 @@ Declare `@extend` followed by `@include` statements first in a declaration block
 When using vendor-prefixed properties, always use the standard property as well. The standard property must always come after all of the vendor-prefixed versions of the same property.
 
 ```css
-.stubbornella {
+.c-directory {
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
@@ -233,12 +233,12 @@ Do not use !important on CSS properties. The only time this is allowed is in a u
 
 ```css
 /* Good */
-.stubbornella {
+.c-story__heading {
    color: red;
 }
 
 /* Bad - don't use !important */
-.stubbornella {
+.c-story__heading {
    color: red !important;
 }
 ```
@@ -249,23 +249,23 @@ All font sizes must be specified using rem only. Do not use percentages, ems or 
 
 ```css
 /* Good */
-.stubbornella {
+.c-story {
    font-size: 14px; /* pixel fall back rule should come first */
    font-size: 1.4rem;
 }
 
 /* Bad - uses ems */
-.stubbornella {
+.c-story {
    font-size: 1.2em;
 }
 
 /* Bad - uses percentage */
-.stubbornella {
+.c-story {
    font-size: 86%;
 }
 
 /* Bad - uses pixel only */
-.stubbornella {
+.c-story {
    font-size: 14px;
 }
 ```
@@ -276,12 +276,12 @@ When declaring HEX values, use lowercase and shorthand (where possible) (Borrowe
 
 ```css
 /* Good */
-.stubbornella {
+.c-story__credit {
     color: #ccc;
 }
 
 /* Bad */
-.stubbornella {
+.c-story__credit {
     color: #CCCCCC;
 }
 ```
@@ -292,12 +292,12 @@ Strings should always use double quotes (never single quotes).
 
 ```css
 /* Good */
-.stubbornella:after {
+.c-story__credit:after {
     content: "Stubbornella";
 }
 
 /* Bad - single quotes */
-.stubbornella:after {
+.c-story__credit:after {
     content: 'Stubbornella';
 }
 ```
@@ -308,12 +308,12 @@ When using a url() value, always use quotes around the actual URL.
 
 ```css
 /* Good */
-.stubbornella {
+.c-header {
     background: url("img/logo.png");
 }
 
 /* Bad - missing quotes */
-.stubbornella {
+.c-header {
     background: url(img/logo.png);
 }
 ```
@@ -346,12 +346,12 @@ Zero values do not require named units, omit the “px” or other unit.
 
 ```css
 /* Good */
-.stubbornella {
+.c-story {
    margin: 0;
 }
 
 /* Bad - uses units */
-.stubbornella {
+.c-story {
    margin: 0px;
 }
 ```
@@ -362,16 +362,16 @@ Only property hacks are allowed. To target Internet Explorer, use Internet Explo
 
 ```css
 /* Good */
-.stubbornella {
+.c-assignment {
    margin: 0;
    _margin: -1px;
 }
 
 /* Bad - uses selector hacks */
-.stubbornella {
+.c-assignment {
    margin: 0px;
 }
-.ie6 .stubbornella {
+.ie6 .c-assignment {
    margin: -1px;
 }
 ```
@@ -383,12 +383,12 @@ Each selector should appear on its own line. The line should break immediately a
 ```css 
 /* Good */
 button,
-input.button {
+input.c-button {
    color: red;
 }
 
 /* Bad - selectors on one line */
-button, input.button {
+button, input.c-button {
    color: red;
 }
 ```
@@ -399,14 +399,14 @@ Do not over-qualify class name selectors with an element type unless you are spe
 
 ``` css
 /* Good */
-.buttonAsLink {}
+.c-button-link {}
 
 /* Bad - element name should be omitted */
-span.buttonAsLink {}
+span.c-button-link {}
 
 /* Good - element is providing exceptions */
 .buttonAsLink {}
-span.buttonAsLink {}
+span.c-button-link {}
 ```
 
 ### Component Elements
@@ -470,12 +470,12 @@ Selectors should never use HTML element IDs. Always use classes for applying sty
 
 ```css
 /* Good */
-.header {
+.c-header {
    height: 100px;
 }
 
 /* Bad - using an ID */
-#header {
+#column_wrapper {
    height: 100px;
 }
 ```
@@ -486,13 +486,13 @@ No heights on anything that contains text. Components should be flexible and the
 
 ```css
 /* Good - no width specified */
-.calloutContent {
+.c-calloutContent {
     border: 1px solid #ccc;
     background: #fff;
 }
 
 /* Bad - dimension specified */
-.calloutContent {
+.c-calloutContent {
     width: 200px;
     height: 150px;
     border: 1px solid #ccc;
