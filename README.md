@@ -30,14 +30,14 @@ A **Block** (The parent element in an object or component) uses hyphens between 
 .c-list_inline {}
 ```
 
-**Elements** are subclasses, or variants, of a component. They add a suffix to the base name, separated by double hyphens.
+**Elements** are subclasses, or variants, of a component. They add a suffix to the base name, separated by double underscores:
 
 ```css
 /* Good */
-.c-list-inline--boxy
+.c-list-inline__item
 
-/* Bad - don't blur distinction between block and modifier */
-.c-list-inline-boxy
+/* Bad - looks like a block. */
+.c-list-inline-item
 ```
 
 **Modifiers** are subclasses, or variants, of a component. They add a suffix to the base name, separated by double hyphens.
@@ -46,7 +46,7 @@ A **Block** (The parent element in an object or component) uses hyphens between 
 /* Good */
 .c-list-inline--boxy
 
-/* Bad - don't blur distinction between block and modifier */
+/* Bad */
 .c-list-inline-boxy
 ```
 
