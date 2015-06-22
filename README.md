@@ -525,17 +525,17 @@ name: grid
 category: Layout
 ---
 
-  The long description is ideal for more detailed explanations and
-  documentation. It should include example HTML for the classes in question.
-  This markup should reset its indentation all the way to the left in order to
-  display properly in the style guide:
+The long description is ideal for more detailed explanations and
+documentation. It should include example HTML for the classes in question.
+This markup should reset its indentation all the way to the left in order to
+display properly in the style guide:
 
-  ```html_example
+    ```html_example
 <div class="grid">
   <div class="col-8"></div>
   <div class="col-4"></div>
 </div>
-  ```
+    ```
 
   TODO: This is a todo statement that describes an atomic task to be completed
     at a later date. It wraps after 80 characters and following lines are
