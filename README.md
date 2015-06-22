@@ -138,7 +138,7 @@ Each property must be on its own line and indented one level. There should be no
 
 Keep nesting to 2 levels deep, 3 absolute max.
 
-```scss
+```css
 /* Good */
 .stubbornella {
     .inner {
@@ -170,7 +170,7 @@ Keep nesting to 2 levels deep, 3 absolute max.
 
 Declare `@extend` followed by `@include` statements first in a declaration block. (Borrowed from [Idiomatic CSS] (https://github.com/necolas/idiomatic-css#4-format))
 
-```scss
+```css
 /* Good */
 .stubbornella {
     @extend .company;
@@ -192,26 +192,22 @@ Declare `@extend` followed by `@include` statements first in a declaration block
 
 When using vendor-prefixed properties, always use the standard property as well. The standard property must always come after all of the vendor-prefixed versions of the same property.
 
-```css
-.c-directory {
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    border-radius: 4px;
-}
-```
-
-If a vendor prefixed property is used, -moz, -webkit, -o, -ms vendor prefixes should also be used. Vendor-prefixed classes should align to the left with all other properties.
+Vendor-prefixed classes should align to the left with all other properties.
 
 ```css
 /* Good */
--webkit-border-radius: 4px;
--moz-border-radius: 4px;
-border-radius: 4px;
+.c-directory {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  transition: top 0.5s;
+}
 
 /* Bad - colons aligned */
--webkit-border-radius:4px;
-   -moz-border-radius:4px;
-        border-radius:4px;
+.c-directory {
+  -webkit-border-radius:4px;
+     -moz-border-radius:4px;
+          border-radius:4px;
+}
 ```
 
 Suffix property value pairs that apply only to a particular browser or class of browsers with a comment listing browsers affected.
@@ -250,7 +246,6 @@ All font sizes must be specified using rem only. Do not use percentages, ems or 
 ```css
 /* Good */
 .c-story {
-   font-size: 14px; /* pixel fall back rule should come first */
    font-size: 1.4rem;
 }
 
@@ -264,7 +259,7 @@ All font sizes must be specified using rem only. Do not use percentages, ems or 
    font-size: 86%;
 }
 
-/* Bad - uses pixel only */
+/* Bad - uses pixels */
 .c-story {
    font-size: 14px;
 }
@@ -309,12 +304,12 @@ When using a url() value, always use quotes around the actual URL.
 ```css
 /* Good */
 .c-header {
-    background: url("img/logo.png");
+  background: url("img/logo.png");
 }
 
 /* Bad - missing quotes */
 .c-header {
-    background: url(img/logo.png);
+  background: url(img/logo.png);
 }
 ```
 
@@ -325,17 +320,17 @@ Use double quotes around attribute selectors.
 ```css
 /* Good */
 input[type="submit"] {
-    ...
+  ...
 }
 
 /* Bad - missing quotes */
 input[type=submit] {
-    ...
+  ...
 }
 
 /* Bad - using single quote */
 input[type='submit'] {
-    ...
+  ...
 }
 ```
 
@@ -397,7 +392,7 @@ button, input.c-button {
 
 Do not over-qualify class name selectors with an element type unless you are specifying exceptions to the default styling of a particular class.
 
-``` css
+```css
 /* Good */
 .c-button-link {}
 
@@ -431,19 +426,19 @@ Order classnames in a class attribute by order of object inheritance for underst
 
 <!-- Bad - don't use single space -->
 <div class="c-tutorial u-pull-left">
-
+```
 
 ### JavaScript and Test Dependence
 
 If an item is manipulated by Javascript, it should be have a js- class purposes of selecting that element. Javascript should not query elements by any other classes.
 
-```js
+```html
 <!-- Good -->
-<div class="c-tabset  js-tabset">
+<div class="c-tabset  js-tabset"></div>
 <script> tabset = $('.js-tabset'); </script>
 
 <!-- Bad: -->
-<div class="c-tabset">
+<div class="c-tabset"></div>
 <script> tabset = $('.c-tabset'); </script>
 ```
 
@@ -512,11 +507,13 @@ No heights on anything that contains text. Components should be flexible and the
    ========================================================================== */
 
 /* Basic one-line comment */
-
+```
 
 ### Style Documentation
 
-We use [Hologram](trulia.github.io/hologram/) to auto-generate a live style guide (/music/style_guide). Objects and other classes need to be documented in specially formatted comments directly in the CSS/SASS files:
+We use [Hologram](trulia.github.io/hologram/) to auto-generate a live style guide (/music/style_guide). Objects and other classes aree documented in specially formatted comments directly in the CSS/SASS files:
+
+```css
 
 /*doc
 ---
@@ -530,15 +527,16 @@ documentation. It should include example HTML for the classes in question.
 This markup should reset its indentation all the way to the left in order to
 display properly in the style guide:
 
-    ```html_example
-<div class="grid">
-  <div class="col-8"></div>
-  <div class="col-4"></div>
-</div>
-    ```
+      ```html_example
+  <div class="grid">
+    <div class="col-8">...
+    <div class="col-4">...
+  </div>
+      ```
+      
+TODO: This is a todo statement that describes an atomic task to be completed
+  at a later date. It wraps after 80 characters and following lines are
+  indented by 2 spaces.
+*/
 
-  TODO: This is a todo statement that describes an atomic task to be completed
-    at a later date. It wraps after 80 characters and following lines are
-    indented by 2 spaces.
-
-/*
+```
