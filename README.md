@@ -503,8 +503,11 @@ No heights on anything that contains text. Components should be flexible and the
    Section comment block
    ========================================================================== */
 
-/* Sub-section comment block
-   ========================================================================== */
+/* 
+
+    Sub-section comment block
+
+*/
 
 /* Basic one-line comment */
 ```
