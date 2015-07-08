@@ -4,40 +4,39 @@
 
 <!-- MarkdownTOC -->
 
-- [Introduction][introduction]
-  - [All class names have a prefix][all-class-names-have-a-prefix]
-  - [Use BEM for Classnames][use-bem-for-classnames]
-    - [Use Hyphens between words in a block classname][use-hyphens-between-words-in-a-block-classname]
-    - [Blocks][blocks]
-    - [Elements][elements]
-    - [Modifiers][modifiers]
-  - [Indentation][indentation]
-  - [Brace Alignment][brace-alignment]
-  - [Property Format][property-format]
-  - [Using CSS Preprocessors][using-css-preprocessors]
-  - [Vendor-Prefixed Properties][vendor-prefixed-properties]
-  - [Units][units]
-  - [Do not use units with zero values][do-not-use-units-with-zero-values]
-  - [HEX value][hex-value]
-  - [String Literals][string-literals]
-  - [Background Images and Other URLs][background-images-and-other-urls]
-  - [Attribute values in selectors][attribute-values-in-selectors]
-  - [Internet Explorer Hacks][internet-explorer-hacks]
-  - [Selectors][selectors]
-  - [Class Qualification][class-qualification]
-  - [Component Elements][component-elements]
-  - [Classnames and Object Composition][classnames-and-object-composition]
-  - [JavaScript and Test Dependence][javascript-and-test-dependence]
-  - [:hover and :focus][hover-and-focus]
-  - [Avoid using IDs][avoid-using-ids]
-  - [Width and height on components][width-and-height-on-components]
-  - [Comments][comments]
-  - [Style Documentation][style-documentation]
+- [Introduction](#introduction)
+  - [All class names have a prefix](#all-class-names-have-a-prefix)
+  - [Use BEM for Classnames](#use-bem-for-classnames)
+    - [Use Hyphens between words in a block classname](#use-hyphens-between-words-in-a-block-classname)
+    - [Blocks](#blocks)
+    - [Elements](#elements)
+    - [Modifiers](#modifiers)
+  - [Indentation](#indentation)
+  - [Brace Alignment](#brace-alignment)
+  - [Property Format](#property-format)
+  - [Using CSS Preprocessors](#using-css-preprocessors)
+  - [Vendor-Prefixed Properties](#vendor-prefixed-properties)
+  - [Units](#units)
+  - [Do not use units with zero values](#do-not-use-units-with-zero-values)
+  - [HEX value](#hex-value)
+  - [String Literals](#string-literals)
+  - [Background Images and Other URLs](#background-images-and-other-urls)
+  - [Attribute values in selectors](#attribute-values-in-selectors)
+  - [Internet Explorer Hacks](#internet-explorer-hacks)
+  - [Selectors](#selectors)
+  - [Class Qualification](#class-qualification)
+  - [Component Elements](#component-elements)
+  - [Classnames and Object Composition](#classnames-and-object-composition)
+  - [JavaScript and Test Dependence](#javascript-and-test-dependence)
+  - [:hover and :focus](#hover-and-focus)
+  - [Avoid using IDs](#avoid-using-ids)
+  - [Width and height on components](#width-and-height-on-components)
+  - [Comments](#comments)
+  - [Style Documentation](#style-documentation)
 
 <!-- /MarkdownTOC -->
 
 
-<a name="introduction"></a>
 ## Introduction
 
 The purpose of this document is to provide guidelines for writing CSS. Code conventions are important for the long-term maintainability of code. Most of the time, developers are maintaining code, either their own or someone else’s. The goal is to have everyone’s code look the same, which allows any developer to easily work on another developer’s code.
@@ -45,7 +44,6 @@ The purpose of this document is to provide guidelines for writing CSS. Code conv
 The architecture itself is based on [OOCSS](https://github.com/stubbornella/oocss/wiki). Class naming conventions are from Harry Roberts’ post on [Namespacing CSS](http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces), incorporating aspects of [BEM](https://en.bem.info/), [SMACSS](https://smacss.com/), and [SUIT](https://github.com/suitcss/suit).
 
 
-<a name="all-class-names-have-a-prefix"></a>
 #### All class names have a prefix
 
 Prefixes help insulate BEM classes from any legacy classnames. The different prefixes are usually a single letter, and are explained in the [music gem documentation]().
@@ -59,12 +57,10 @@ Prefixes help insulate BEM classes from any legacy classnames. The different pre
 ```
 
 
-<a name="use-bem-for-classnames"></a>
 ### Use BEM for Classnames
 
 BEM convention (Block, Element, Modifier) uses different delimiters to make it easier to understand the role of an element.
 
-<a name="use-hyphens-between-words-in-a-block-classname"></a>
 #### Use Hyphens between words in a block classname
 
 ```css
@@ -79,7 +75,6 @@ BEM convention (Block, Element, Modifier) uses different delimiters to make it e
 ```
 
 
-<a name="blocks"></a>
 #### Blocks
 
 A **Block** (The parent element in an object or component) uses hyphens between words. Prefix all class names with the first letter of their type: o- Object, c- Component, l-Layout, u- Utility. See the [README](https://github.com/vhl/music/blob/library/app/assets/stylesheets/music/README.md) in the music gem library for more details.
@@ -97,7 +92,6 @@ A **Block** (The parent element in an object or component) uses hyphens between 
 .c-list_inline
 ```
 
-<a name="elements"></a>
 #### Elements
 
 Elements are child elements of a component. They add a suffix to the base name, separated by double underscores.
@@ -110,7 +104,6 @@ Elements are child elements of a component. They add a suffix to the base name, 
 .c-list-inline-item
 ```
 
-<a name="modifiers"></a>
 #### Modifiers
 
 Modifiers are subclasses, or variants, of a component. They add a suffix to the base name, separated by double hyphens.
@@ -136,7 +129,6 @@ When extending a component and styling the inner elements, use the base componen
 
 
 
-<a name="indentation"></a>
 ### Indentation
 
 Each indentation level is made up of two spaces. Do not use tabs. (Please set your editor to use two spaces)
@@ -163,7 +155,6 @@ Rules inside of `@media` must be indented an additional level.
 }
 ```
 
-<a name="brace-alignment"></a>
 ### Brace Alignment
 
 The opening brace should be on the same line as the last selector in the rule and should be preceded by a space. The closing brace should be on its own line after the last property and be indented to the same level as the line on which the opening brace is.
@@ -185,7 +176,6 @@ The opening brace should be on the same line as the last selector in the rule an
 }
 ```
 
-<a name="property-format"></a>
 ### Property Format
 
 Each property must be on its own line and indented one level. There should be no space before the colon and one space after. All properties must end with a semicolon.
@@ -210,7 +200,6 @@ Each property must be on its own line and indented one level. There should be no
 }
 ```
 
-<a name="using-css-preprocessors"></a>
 ### Using CSS Preprocessors
 
 Keep nesting to 2 levels deep, 3 absolute max.
@@ -271,7 +260,6 @@ Declare `@extend` before other properties. Keep in mind that extending via multi
 }
 ```
 
-<a name="vendor-prefixed-properties"></a>
 ### Vendor-Prefixed Properties
 
 When using vendor-prefixed properties, always use the standard property as well. The standard property must always come after all of the vendor-prefixed versions of the same property.
@@ -323,7 +311,6 @@ Do not use !important on CSS properties. The only time this is allowed is in a u
 }
 ```
 
-<a name="units"></a>
 ### Units
 
 In general, use mod() -- this is a custom SASS function that provides measures relative to a common standard. The value of mod(1) is 1rem. Rems are like ems, but without cascading problems: if a rem = 16px, you can count on that value anywhere in the page.
@@ -354,7 +341,6 @@ Ems should be used very rarely -- example: if you need to add a bit of simulated
 
 
 
-<a name="do-not-use-units-with-zero-values"></a>
 ### Do not use units with zero values
 
 Zero values do not require named units, omit the “px” or other unit.
@@ -373,7 +359,6 @@ Zero values do not require named units, omit the “px” or other unit.
 
 
 
-<a name="hex-value"></a>
 ### HEX value
 
 When specifying color values in HEX, use lowercase, and if possible, 3-character shorthand:
@@ -392,7 +377,6 @@ When specifying color values in HEX, use lowercase, and if possible, 3-character
 }
 ```
 
-<a name="string-literals"></a>
 ### String Literals
 
 Strings should always use double quotes (never single quotes).
@@ -409,7 +393,6 @@ Strings should always use double quotes (never single quotes).
 }
 ```
 
-<a name="background-images-and-other-urls"></a>
 ### Background Images and Other URLs
 
 When using a url() value, always use quotes around the actual URL.
@@ -426,7 +409,6 @@ When using a url() value, always use quotes around the actual URL.
 }
 ```
 
-<a name="attribute-values-in-selectors"></a>
 ### Attribute values in selectors
 
 Use double quotes around attribute selectors.
@@ -449,7 +431,6 @@ input[type='submit'] {
 ```
 
 
-<a name="internet-explorer-hacks"></a>
 ### Internet Explorer Hacks
 
 Only property hacks are allowed. To target Internet Explorer, use Internet Explorer-specific hacks like * and _ in the normal CSS files. Browser specific styles should not be in separate per-browser stylesheets. We prefer to keep all the CSS for a particular object in one place as it is more maintainable. In addition selector hacks should not be used. Classes like .ie6 increase specificity. Hacks should be kept within the CSS rule they affect and only property hacks should be used.
@@ -470,7 +451,6 @@ Only property hacks are allowed. To target Internet Explorer, use Internet Explo
 }
 ```
 
-<a name="selectors"></a>
 ### Selectors
 
 Each selector should appear on its own line. The line should break immediately after the comma. Each selector should be aligned to the same left column.
@@ -488,7 +468,6 @@ button, input.c-button {
 }
 ```
 
-<a name="class-qualification"></a>
 ### Class Qualification
 
 Do not over-qualify class name selectors with an element type unless you are specifying exceptions to the default styling of a particular class.
@@ -505,7 +484,6 @@ span.c-button-link {}
 span.c-button-link {}
 ```
 
-<a name="component-elements"></a>
 ### Component Elements
 
 Use single, name-qualified selectors when styling component elements--don't use compound selectors, which will increase specificity.
@@ -518,7 +496,6 @@ Use single, name-qualified selectors when styling component elements--don't use 
 .c-tabset > .c-tabset__tab
 ```
 
-<a name="classnames-and-object-composition"></a>
 ### Classnames and Object Composition
 
 Order classnames in a class attribute by order of object inheritance for understandability (functionally, the order of classnames in HTML makes no difference). Separate multiple classes with TWO spaces for scannability.
@@ -531,7 +508,6 @@ Order classnames in a class attribute by order of object inheritance for underst
 <div class="c-tutorial u-pull-left">
 ```
 
-<a name="javascript-and-test-dependence"></a>
 ### JavaScript and Test Dependence
 
 If an item is manipulated by Javascript, it should be have a js- class purposes of selecting that element. Javascript should not query elements by any other classes.
@@ -546,7 +522,6 @@ If an item is manipulated by Javascript, it should be have a js- class purposes 
 <script> tabset = $('.c-tabset'); </script>
 ```
 
-<a name="hover-and-focus"></a>
 ### :hover and :focus
 
 If :hover pseudo class is styled, :focus should also be styled for accessibility. Focus styles should never be removed.
@@ -564,7 +539,6 @@ a:hover {
 }
 ```
 
-<a name="avoid-using-ids"></a>
 ### Avoid using IDs
 
 Selectors should never use HTML element IDs. Always use classes for applying styles to specific areas of a page.
@@ -581,7 +555,6 @@ Selectors should never use HTML element IDs. Always use classes for applying sty
 }
 ```
 
-<a name="width-and-height-on-components"></a>
 ### Width and height on components
 
 No heights on anything that contains text. Components should be flexible and their widths should be controlled by grids.
@@ -603,7 +576,6 @@ No heights on anything that contains text. Components should be flexible and the
 ```
 
 
-<a name="comments"></a>
 ### Comments
 
 ```css
@@ -620,7 +592,6 @@ No heights on anything that contains text. Components should be flexible and the
 /* Basic one-line comment */
 ```
 
-<a name="style-documentation"></a>
 ### Style Documentation
 
 We use [Hologram](trulia.github.io/hologram/) to auto-generate a live style guide (/music/style_guide). Objects and other classes are documented in specially formatted comments directly in the CSS/SASS files:
