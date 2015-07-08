@@ -2,8 +2,6 @@
 
 The purpose of this document is to provide guidelines for writing CSS. Code conventions are important for the long-term maintainability of code. Most of the time, developers are maintaining code, either their own or someone else’s. The goal is to have everyone’s code look the same, which allows any developer to easily work on another developer’s code.
 
-We've borrowed some ideas from [Idiomatic CSS](https://github.com/necolas/idiomatic-css) and credited it throughout the document.
-
 The architecture itself is based on [OOCSS](https://github.com/stubbornella/oocss/wiki). Class naming conventions are from Harry Roberts’ post on [Namespacing CSS](http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces), incorporating aspects of [BEM](https://en.bem.info/), [SMACSS](https://smacss.com/), and [SUIT](https://github.com/suitcss/suit). 
 
 
@@ -168,23 +166,29 @@ Keep nesting to 2 levels deep, 3 absolute max.
 }
 ```
 
-Declare `@extend` followed by `@include` statements first in a declaration block. (Borrowed from [Idiomatic CSS] (https://github.com/necolas/idiomatic-css#4-format))
+Declare `@extend` before other properties. Keep in mind that extending via multiple classes in the markup should be preferred over SASS '@extend' in the majority of cases.
 
 ```css
 /* Good */
-.stubbornella {
-    @extend .company;
-    @include font-size(14);
+.c-stubbornella {
+    @extend .c-company;
     color: #555;
-    font-size: 11px;
+    padding: 2rem;
 }
+<div class="stubbornella">...</div>
+
+/* Better */
+.c-stubbornella {
+    color: #555;
+    padding: 2rem;
+}
+<div class="c-company  c-stubbornella">...</div>
 
 /* Bad */
-.stubbornella {
+.c-stubbornella {
     color: #555;
     @extend .company;
-    font-size: 11px;
-    @include font-size(14);
+    padding: 2rem;
 }
 ```
 
@@ -267,17 +271,19 @@ All font sizes must be specified using rem only. Do not use percentages, ems or 
 
 ### HEX value
 
-When declaring HEX values, use lowercase and shorthand (where possible) (Borrowed from [Idiomatic CSS] (https://github.com/necolas/idiomatic-css#4-format))
+When specifying color values in HEX, use lowercase, and if possible, 3-character shorthand:
 
 ```css
 /* Good */
 .c-story__credit {
     color: #ccc;
+    background-color: #1b48fa;
 }
 
 /* Bad */
 .c-story__credit {
     color: #CCCCCC;
+    background-color: #1B48FA;
 }
 ```
 
