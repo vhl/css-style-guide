@@ -1,9 +1,20 @@
 # VHL CSS Code Standards
 
 
+<a name="introduction"></a>
+## Introduction
+
+The purpose of this document is to provide guidelines for writing CSS. Code conventions are important for the long-term maintainability of code. Most of the time, developers are maintaining code, either their own or someone else’s. The goal is to have everyone’s code look the same, which allows any developer to easily work on another developer’s code.
+
+The architecture itself is heavily based on [OOCSS](https://github.com/stubbornella/oocss/wiki). Class naming conventions are adapted from Harry Roberts’ [More Transparent UI Code with Namespaces]](http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces).
+
+If you already know the conceptual class naming stuff, you can skip right to [Coding Style](#coding-style).
+
+
+
+
 <!-- MarkdownTOC -->
 
-- [Introduction](#introduction)
 - [Class Naming Conventions](#class-naming-conventions)
   - [All classnames should have a prefix](#all-classnames-should-have-a-prefix)
   - [Use BEM to reflect component structure](#use-bem-to-reflect-component-structure)
@@ -39,18 +50,6 @@
 - [Style Documentation](#style-documentation)
 
 <!-- /MarkdownTOC -->
-
-
-
-
-<a name="introduction"></a>
-## Introduction
-
-The purpose of this document is to provide guidelines for writing CSS. Code conventions are important for the long-term maintainability of code. Most of the time, developers are maintaining code, either their own or someone else’s. The goal is to have everyone’s code look the same, which allows any developer to easily work on another developer’s code.
-
-The architecture itself is heavily based on [OOCSS](https://github.com/stubbornella/oocss/wiki). Class naming conventions are adapted from Harry Roberts’ [More Transparent UI Code with Namespaces]](http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces).
-
-If you already know the conceptual class naming stuff, you can skip right to [Coding Style](#coding-style).
 
 
 
@@ -768,17 +767,16 @@ We use multiple strategies to make sure the CSS library is understandable and ma
 
 * SMACSS prefixes indicate different types of objects.
 * BEM classnames make structure clear on both the HTML and CSS sides.
-* Objects and other classes are documented in specially formatted comments directly in the CSS/SASS files:
+* Objects and other classes are documented in specially formatted comments directly in the CSS/SASS files (see sample below).
 * We use [Hologram](trulia.github.io/hologram/) to auto-generate a [live style guide](//M3-SERVER/music/style_guide) from these comments, which provides a browsable inventory of components, their variants, instructions on how to use them and what they should look like.
 
 ```css
 
-<a name="doc"></a>
+
 /*doc
 ---
 title: Layout Grids
 name: grid
-<a name="category-layout"></a>
 category: Layout
 ---
 
