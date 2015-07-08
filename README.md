@@ -15,13 +15,6 @@ If you already know the conceptual class naming stuff, you can skip right to [Co
 
 <!-- MarkdownTOC -->
 
-- [Class Naming Conventions](#class-naming-conventions)
-  - [All classnames should have a prefix](#all-classnames-should-have-a-prefix)
-  - [Use BEM to reflect component structure](#use-bem-to-reflect-component-structure)
-    - [Use Hyphens between words in a block classname](#use-hyphens-between-words-in-a-block-classname)
-    - [Blocks](#blocks)
-    - [Elements](#elements)
-    - [Modifiers](#modifiers)
 - [Object-Oriented CSS (OOCSS)](#object-oriented-css-oocss)
   - [Separate Structure from Skin](#separate-structure-from-skin)
   - [Separate Containers from Content](#separate-containers-from-content)
@@ -30,6 +23,13 @@ If you already know the conceptual class naming stuff, you can skip right to [Co
   - [Object Composition with Multiple Classes](#object-composition-with-multiple-classes)
   - [Avoid using IDs](#avoid-using-ids)
   - [Avoid Compound Selectors Whenever Possible](#avoid-compound-selectors-whenever-possible)
+- [Class Naming Conventions](#class-naming-conventions)
+  - [All classnames should have a prefix](#all-classnames-should-have-a-prefix)
+  - [Use BEM to reflect component structure](#use-bem-to-reflect-component-structure)
+    - [Use Hyphens between words in a block classname](#use-hyphens-between-words-in-a-block-classname)
+    - [Blocks](#blocks)
+    - [Elements](#elements)
+    - [Modifiers](#modifiers)
 - [Coding Style](#coding-style)
   - [Indentation](#indentation)
   - [Brace Alignment](#brace-alignment)
@@ -53,112 +53,6 @@ If you already know the conceptual class naming stuff, you can skip right to [Co
 
 
 
-
-
-<a name="class-naming-conventions"></a>
-## Class Naming Conventions
-
-
-
-
-<a name="all-classnames-should-have-a-prefix"></a>
-### All classnames should have a prefix
-
-Prefixes help insulate BEM classes from any legacy classnames. The different prefixes are usually a single letter, and are explained in the [music gem documentation](). The system used here is adapted from [SMACSS](https://smacss.com/).
-
-```css
-/* Good */
-.c-breadcrumbs
-
-/* Bad - no prefix */
-.breadcrumbs
-```
-
-
-
-<a name="use-bem-to-reflect-component-structure"></a>
-### Use BEM to reflect component structure
-
-BEM convention (Block, Element, Modifier) uses different delimiters to make it easier to understand the role of an element.
-
-
-
-<a name="use-hyphens-between-words-in-a-block-classname"></a>
-#### Use Hyphens between words in a block classname
-
-```css
-/* Good */
-.c-data-table
-
-/* Bad - uses single underscore. */
-.c_data_table
-
-/* Bad - uses camel-case. */
-.c-listInlineBoxy
-```
-
-
-
-
-<a name="blocks"></a>
-#### Blocks
-
-A **Block** (The parent element in an object or component) uses hyphens between words. Prefix all class names with the first letter of their type: o- Object, c- Component, l-Layout, u- Utility. See the [README](https://github.com/vhl/music/blob/library/app/assets/stylesheets/music/README.md) in the music gem library for more details.
-
-```css
-/* Good */
-.o-list-inline
-.o-list-inline__list-item
-.c-list-inline--boxy
-
-/* Bad - uses camel case*/
-.u-pullLeft
-
-/* Bad - uses single underscores */
-.c-list_inline
-```
-
-
-
-<a name="elements"></a>
-#### Elements
-
-Elements are child elements of a component. They add a suffix to the base name, separated by double underscores.
-
-```css
-/* Good: double underscore */
-.c-list-inline__item
-
-/* Bad - looks like a block. */
-.c-list-inline-item
-```
-
-
-
-
-<a name="modifiers"></a>
-#### Modifiers
-
-Modifiers are subclasses, or variants, of a component. They add a suffix to the base name, separated by double hyphens.
-
-```css
-/* Good: double hyphen */
-.c-list-inline--boxy
-
-/* Bad - looks like a block. */
-.c-list-inline-boxy
-```
-
-When extending a component and styling the inner elements, use the base component's inner elements' class name for styling, instead of extending the class names of the inner elements as well.
-
-```css
-
-/* Good - modifiers (subclasses) of components refer to unmodified inner element's names */
-.c-list-inline--boxy > .o-list-inline__list-item
-
-/* Bad - don't modify inner element's names */
-.c-list-inline--boxy > .c-list-inline__list-item--boxy {}
-```
 
 
 
@@ -299,6 +193,116 @@ Use single, name-qualified selectors when styling component elements--don't use 
 
 /* Bad - not necessary; child class is unique enough. */
 .c-tabset > .c-tabset__tab
+```
+
+
+
+
+
+
+<a name="class-naming-conventions"></a>
+## Class Naming Conventions
+
+
+
+
+<a name="all-classnames-should-have-a-prefix"></a>
+### All classnames should have a prefix
+
+Prefixes help insulate BEM classes from any legacy classnames. The different prefixes are usually a single letter, and are explained in the [music gem documentation](). The system used here is adapted from [SMACSS](https://smacss.com/).
+
+```css
+/* Good */
+.c-breadcrumbs
+
+/* Bad - no prefix */
+.breadcrumbs
+```
+
+
+
+<a name="use-bem-to-reflect-component-structure"></a>
+### Use BEM to reflect component structure
+
+BEM convention (Block, Element, Modifier) uses different delimiters to make it easier to understand the role of an element.
+
+
+
+<a name="use-hyphens-between-words-in-a-block-classname"></a>
+#### Use Hyphens between words in a block classname
+
+```css
+/* Good */
+.c-data-table
+
+/* Bad - uses single underscore. */
+.c_data_table
+
+/* Bad - uses camel-case. */
+.c-listInlineBoxy
+```
+
+
+
+
+<a name="blocks"></a>
+#### Blocks
+
+A **Block** (The parent element in an object or component) uses hyphens between words. Prefix all class names with the first letter of their type: o- Object, c- Component, l-Layout, u- Utility. See the [README](https://github.com/vhl/music/blob/library/app/assets/stylesheets/music/README.md) in the music gem library for more details.
+
+```css
+/* Good */
+.o-list-inline
+.o-list-inline__list-item
+.c-list-inline--boxy
+
+/* Bad - uses camel case*/
+.u-pullLeft
+
+/* Bad - uses single underscores */
+.c-list_inline
+```
+
+
+
+<a name="elements"></a>
+#### Elements
+
+Elements are child elements of a component. They add a suffix to the base name, separated by double underscores.
+
+```css
+/* Good: double underscore */
+.c-list-inline__item
+
+/* Bad - looks like a block. */
+.c-list-inline-item
+```
+
+
+
+
+<a name="modifiers"></a>
+#### Modifiers
+
+Modifiers are subclasses, or variants, of a component. They add a suffix to the base name, separated by double hyphens.
+
+```css
+/* Good: double hyphen */
+.c-list-inline--boxy
+
+/* Bad - looks like a block. */
+.c-list-inline-boxy
+```
+
+When extending a component and styling the inner elements, use the base component's inner elements' class name for styling, instead of extending the class names of the inner elements as well.
+
+```css
+
+/* Good - modifiers (subclasses) of components refer to unmodified inner element's names */
+.c-list-inline--boxy > .o-list-inline__list-item
+
+/* Bad - don't modify inner element's names */
+.c-list-inline--boxy > .c-list-inline__list-item--boxy {}
 ```
 
 
