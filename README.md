@@ -1,40 +1,46 @@
-# CSS code standards
-
+# VHL CSS Code Standards
 
 
 <!-- MarkdownTOC -->
 
 - [Introduction](#introduction)
-  - [All class names have a prefix](#all-class-names-have-a-prefix)
-  - [Use BEM for Classnames](#use-bem-for-classnames)
+- [Class Naming Conventions](#class-naming-conventions)
+  - [All classnames should have a prefix](#all-classnames-should-have-a-prefix)
+  - [Use BEM to reflect component structure](#use-bem-to-reflect-component-structure)
     - [Use Hyphens between words in a block classname](#use-hyphens-between-words-in-a-block-classname)
     - [Blocks](#blocks)
     - [Elements](#elements)
     - [Modifiers](#modifiers)
+- [Object-Oriented CSS (OOCSS)](#object-oriented-css-oocss)
+  - [Separate Structure from Skin](#separate-structure-from-skin)
+  - [Separate Containers from Content](#separate-containers-from-content)
+    - [Component Width and Height](#component-width-and-height)
+  - [Class Qualification](#class-qualification)
+  - [Object Composition with Multiple Classes](#object-composition-with-multiple-classes)
+  - [Avoid using IDs](#avoid-using-ids)
+  - [Avoid Compound Selectors Whenever Possible](#avoid-compound-selectors-whenever-possible)
+- [Coding Style](#coding-style)
   - [Indentation](#indentation)
   - [Brace Alignment](#brace-alignment)
-  - [Property Format](#property-format)
-  - [Using CSS Preprocessors](#using-css-preprocessors)
+  - [Selectors](#selectors)
+  - [Properties](#properties)
   - [Vendor-Prefixed Properties](#vendor-prefixed-properties)
+  - [Using CSS Preprocessors](#using-css-preprocessors)
   - [Units](#units)
-  - [Do not use units with zero values](#do-not-use-units-with-zero-values)
-  - [HEX value](#hex-value)
+    - [Do not use units with zero values](#do-not-use-units-with-zero-values)
+  - [HEX values](#hex-values)
   - [String Literals](#string-literals)
-  - [Background Images and Other URLs](#background-images-and-other-urls)
+  - [URLs](#urls)
   - [Attribute values in selectors](#attribute-values-in-selectors)
   - [Internet Explorer Hacks](#internet-explorer-hacks)
-  - [Selectors](#selectors)
-  - [Class Qualification](#class-qualification)
-  - [Component Elements](#component-elements)
-  - [Classnames and Object Composition](#classnames-and-object-composition)
   - [JavaScript and Test Dependence](#javascript-and-test-dependence)
   - [:hover and :focus](#hover-and-focus)
-  - [Avoid using IDs](#avoid-using-ids)
-  - [Width and height on components](#width-and-height-on-components)
   - [Comments](#comments)
-  - [Style Documentation](#style-documentation)
+- [Style Documentation](#style-documentation)
 
 <!-- /MarkdownTOC -->
+
+
 
 
 <a name="introduction"></a>
@@ -42,13 +48,24 @@
 
 The purpose of this document is to provide guidelines for writing CSS. Code conventions are important for the long-term maintainability of code. Most of the time, developers are maintaining code, either their own or someone else’s. The goal is to have everyone’s code look the same, which allows any developer to easily work on another developer’s code.
 
-The architecture itself is based on [OOCSS](https://github.com/stubbornella/oocss/wiki). Class naming conventions are from Harry Roberts’ post on [Namespacing CSS](http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces), incorporating aspects of [BEM](https://en.bem.info/), [SMACSS](https://smacss.com/), and [SUIT](https://github.com/suitcss/suit).
+The architecture itself is heavily based on [OOCSS](https://github.com/stubbornella/oocss/wiki). Class naming conventions are adapted from Harry Roberts’ [More Transparent UI Code with Namespaces]](http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces).
+
+If you already know the conceptual class naming stuff, you can skip right to [Coding Style](#coding-style).
 
 
-<a name="all-class-names-have-a-prefix"></a>
-#### All class names have a prefix
 
-Prefixes help insulate BEM classes from any legacy classnames. The different prefixes are usually a single letter, and are explained in the [music gem documentation]().
+
+
+<a name="class-naming-conventions"></a>
+## Class Naming Conventions
+
+
+
+
+<a name="all-classnames-should-have-a-prefix"></a>
+### All classnames should have a prefix
+
+Prefixes help insulate BEM classes from any legacy classnames. The different prefixes are usually a single letter, and are explained in the [music gem documentation](). The system used here is adapted from [SMACSS](https://smacss.com/).
 
 ```css
 /* Good */
@@ -59,10 +76,13 @@ Prefixes help insulate BEM classes from any legacy classnames. The different pre
 ```
 
 
-<a name="use-bem-for-classnames"></a>
-### Use BEM for Classnames
+
+<a name="use-bem-to-reflect-component-structure"></a>
+### Use BEM to reflect component structure
 
 BEM convention (Block, Element, Modifier) uses different delimiters to make it easier to understand the role of an element.
+
+
 
 <a name="use-hyphens-between-words-in-a-block-classname"></a>
 #### Use Hyphens between words in a block classname
@@ -77,6 +97,8 @@ BEM convention (Block, Element, Modifier) uses different delimiters to make it e
 /* Bad - uses camel-case. */
 .c-listInlineBoxy
 ```
+
+
 
 
 <a name="blocks"></a>
@@ -97,6 +119,8 @@ A **Block** (The parent element in an object or component) uses hyphens between 
 .c-list_inline
 ```
 
+
+
 <a name="elements"></a>
 #### Elements
 
@@ -109,6 +133,9 @@ Elements are child elements of a component. They add a suffix to the base name, 
 /* Bad - looks like a block. */
 .c-list-inline-item
 ```
+
+
+
 
 <a name="modifiers"></a>
 #### Modifiers
@@ -133,6 +160,156 @@ When extending a component and styling the inner elements, use the base componen
 /* Bad - don't modify inner element's names */
 .c-list-inline--boxy > .c-list-inline__list-item--boxy {}
 ```
+
+
+
+
+
+<a name="object-oriented-css-oocss"></a>
+## Object-Oriented CSS (OOCSS)
+
+OOCSS advocates practices which are beneficial to flexibility, code reuse, maintenance and performance.
+
+
+
+
+<a name="separate-structure-from-skin"></a>
+### Separate Structure from Skin
+
+Objects should provide structure (e.g., grid layout). They solve the hard problems that we encounter again and again.
+
+Components and skins (modifiers) should determine more cosmetic aspects (color, font, border, background).
+
+
+<a name="separate-containers-from-content"></a>
+### Separate Containers from Content
+
+A component should have no knowledge of its container.
+
+Avoid location-based styles:
+
+```css
+/* Bad: location-based (also: ID selector!) */
+.score {font-size: 1.1rem;}
+#footer .score {font-size: 1.4rem;}
+```
+
+
+
+```css
+/* Good */
+.score {font-size: 1.1rem;}
+.score--lg {font-size: 1.4rem;}
+```
+
+`.score--lg` is a modifier that is placed on the same element as `.score`.
+
+
+<a name="component-width-and-height"></a>
+#### Component Width and Height
+
+* Containers (grids, modules) dictate the width of their contents.
+  * Avoid setting widths on anything else.
+* Content dictates the height of its container.
+  * Avoid setting heights on containers.
+
+Components should be flexible and their widths controlled by grids.
+
+```css
+/* Good - dimensions unspecified */
+.c-callout {
+  display: block;
+  border: 1px solid #ccc;
+}
+
+/* Bad - dimensions specified */
+.c-callout {
+  display: block;
+  width: 200px;
+  height: 150px;
+  border: 1px solid #ccc;
+}
+```
+
+
+
+
+<a name="class-qualification"></a>
+### Class Qualification
+
+Do not over-qualify class name selectors with an element type unless you are specifying exceptions to the default styling of a particular class. Leaving out the element name makes the class reusable on different kinds of elements.
+
+```css
+/* Good */
+.c-button-link {}
+
+/* Bad - element name should be omitted */
+span.c-button-link {}
+
+/* Good - element is providing exceptions */
+.buttonAsLink {}
+span.c-button-link {}
+```
+
+
+
+<a name="object-composition-with-multiple-classes"></a>
+### Object Composition with Multiple Classes
+
+Order classnames in a class attribute by order of object inheritance -- order in the class attribute does not matter functionally, but helps make the inheritance chain more apparent. Separate multiple classes with TWO spaces for readability.
+
+```html
+<!-- Good -->
+<div class="o-inline-list  c-tutorial-nav  u-pull-left">
+
+<!-- Bad - don't use single space -->
+<div class="o-inline-list c-tutorial u-pull-left">
+```
+
+
+
+<a name="avoid-using-ids"></a>
+### Avoid using IDs
+
+Selectors should NEVER use HTML element IDs, since they increase specificity and make it difficult to override styles. Always use classes for applying styles.
+
+```css
+/* Good */
+.c-header {
+   height: 100px;
+}
+
+/* Bad - using an ID */
+<a name="olumn_wrapper-"></a>
+#column_wrapper {
+   height: 100px;
+}
+```
+
+
+
+
+<a name="avoid-compound-selectors-whenever-possible"></a>
+### Avoid Compound Selectors Whenever Possible
+
+Use single, name-qualified selectors when styling component elements--don't use compound selectors, which will increase specificity.
+
+```css
+/* Good */
+.c-tabset__tab {}
+
+/* Bad - not necessary; child class is unique enough. */
+.c-tabset > .c-tabset__tab
+```
+
+
+
+
+
+<a name="coding-style"></a>
+## Coding Style
+
+
 
 
 
@@ -163,6 +340,10 @@ Rules inside of `@media` must be indented an additional level.
 }
 ```
 
+
+
+
+
 <a name="brace-alignment"></a>
 ### Brace Alignment
 
@@ -185,10 +366,36 @@ The opening brace should be on the same line as the last selector in the rule an
 }
 ```
 
-<a name="property-format"></a>
-### Property Format
 
-Each property must be on its own line and indented one level. There should be no space before the colon and one space after. All properties must end with a semicolon.
+
+<a name="selectors"></a>
+### Selectors
+
+Each selector should appear on its own line. The line should break immediately after the comma. Each selector should be aligned to the same left column.
+
+```css
+/* Good */
+button,
+input.c-button {
+   color: red;
+}
+
+/* Bad - selectors on one line */
+button, input.c-button {
+   color: red;
+}
+```
+
+
+
+
+
+
+
+<a name="properties"></a>
+### Properties
+
+Each property must be on its own line and indented one level from the selector. There should be no space before the colon and one space after. All properties must end with a semicolon.
 
 ```css
 /* Good */
@@ -209,6 +416,64 @@ Each property must be on its own line and indented one level. There should be no
     color:red
 }
 ```
+
+
+
+<a name="vendor-prefixed-properties"></a>
+### Vendor-Prefixed Properties
+
+When using vendor-prefixed properties, always use the standard property as well. The standard property must always come after all of the vendor-prefixed versions of the same property (This applies to vendor-prefixed property _values_ as well).
+
+Vendor-prefixed classes should align to the left with all other properties.
+
+```css
+/* Good */
+.c-directory {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  transition: top 0.5s;
+}
+
+/* Bad - colons aligned */
+.c-directory {
+  -webkit-border-radius:4px;
+     -moz-border-radius:4px;
+          border-radius:4px;
+}
+```
+
+Suffix property value pairs that apply only to a particular browser or class of browsers with a comment listing browsers affected.
+
+```css
+background: #fcfcfc; /* Old browsers */
+background: -moz-linear-gradient(...); /* FF3.6+ */
+background: -webkit-gradient(...); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(...); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(...); /* Opera 11.10+ */
+background: -ms-linear-gradient(...); /* IE10+ */
+background: linear-gradient(...); /* W3C */
+```
+
+Suffix fallback with “Old browsers” and standard property with “W3C”. Add a plus or minus to indicate that a property applies to all previous browsers by the same vendor or all future browsers by the same vendor.
+Using !important
+
+Do not use !important on CSS properties. The only time this is allowed is in a u- utility style (provided by Core team).
+
+```css
+/* Good */
+.c-story__heading {
+   color: red;
+}
+
+/* Bad - don't use !important */
+.c-story__heading {
+   color: red !important;
+}
+```
+
+
+
+
 
 <a name="using-css-preprocessors"></a>
 ### Using CSS Preprocessors
@@ -271,57 +536,7 @@ Declare `@extend` before other properties. Keep in mind that extending via multi
 }
 ```
 
-<a name="vendor-prefixed-properties"></a>
-### Vendor-Prefixed Properties
 
-When using vendor-prefixed properties, always use the standard property as well. The standard property must always come after all of the vendor-prefixed versions of the same property.
-
-Vendor-prefixed classes should align to the left with all other properties.
-
-```css
-/* Good */
-.c-directory {
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  transition: top 0.5s;
-}
-
-/* Bad - colons aligned */
-.c-directory {
-  -webkit-border-radius:4px;
-     -moz-border-radius:4px;
-          border-radius:4px;
-}
-```
-
-Suffix property value pairs that apply only to a particular browser or class of browsers with a comment listing browsers affected.
-
-```css
-background: #fcfcfc; /* Old browsers */
-background: -moz-linear-gradient(...); /* FF3.6+ */
-background: -webkit-gradient(...); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(...); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(...); /* Opera 11.10+ */
-background: -ms-linear-gradient(...); /* IE10+ */
-background: linear-gradient(...); /* W3C */
-```
-
-Suffix fallback with “Old browsers” and standard property with “W3C”. Add a plus or minus to indicate that a property applies to all previous browsers by the same vendor or all future browsers by the same vendor.
-Using !important
-
-Do not use !important on CSS properties. The only time this is allowed is in a u- utility style (provided by Core team).
-
-```css
-/* Good */
-.c-story__heading {
-   color: red;
-}
-
-/* Bad - don't use !important */
-.c-story__heading {
-   color: red !important;
-}
-```
 
 <a name="units"></a>
 ### Units
@@ -355,7 +570,7 @@ Ems should be used very rarely -- example: if you need to add a bit of simulated
 
 
 <a name="do-not-use-units-with-zero-values"></a>
-### Do not use units with zero values
+#### Do not use units with zero values
 
 Zero values do not require named units, omit the “px” or other unit.
 
@@ -373,8 +588,9 @@ Zero values do not require named units, omit the “px” or other unit.
 
 
 
-<a name="hex-value"></a>
-### HEX value
+
+<a name="hex-values"></a>
+### HEX values
 
 When specifying color values in HEX, use lowercase, and if possible, 3-character shorthand:
 
@@ -391,6 +607,9 @@ When specifying color values in HEX, use lowercase, and if possible, 3-character
     background-color: #1B48FA;
 }
 ```
+
+
+
 
 <a name="string-literals"></a>
 ### String Literals
@@ -409,10 +628,11 @@ Strings should always use double quotes (never single quotes).
 }
 ```
 
-<a name="background-images-and-other-urls"></a>
-### Background Images and Other URLs
 
-When using a url() value, always use quotes around the actual URL.
+<a name="urls"></a>
+### URLs
+
+When using a url() value, always use double quotes around the actual URL.
 
 ```css
 /* Good */
@@ -426,10 +646,12 @@ When using a url() value, always use quotes around the actual URL.
 }
 ```
 
+
+
 <a name="attribute-values-in-selectors"></a>
 ### Attribute values in selectors
 
-Use double quotes around attribute selectors.
+Use double quotes around attribute values.
 
 ```css
 /* Good */
@@ -470,71 +692,15 @@ Only property hacks are allowed. To target Internet Explorer, use Internet Explo
 }
 ```
 
-<a name="selectors"></a>
-### Selectors
 
-Each selector should appear on its own line. The line should break immediately after the comma. Each selector should be aligned to the same left column.
 
-```css
-/* Good */
-button,
-input.c-button {
-   color: red;
-}
 
-/* Bad - selectors on one line */
-button, input.c-button {
-   color: red;
-}
-```
 
-<a name="class-qualification"></a>
-### Class Qualification
-
-Do not over-qualify class name selectors with an element type unless you are specifying exceptions to the default styling of a particular class.
-
-```css
-/* Good */
-.c-button-link {}
-
-/* Bad - element name should be omitted */
-span.c-button-link {}
-
-/* Good - element is providing exceptions */
-.buttonAsLink {}
-span.c-button-link {}
-```
-
-<a name="component-elements"></a>
-### Component Elements
-
-Use single, name-qualified selectors when styling component elements--don't use compound selectors, which will increase specificity.
-
-```css
-/* Good */
-.c-tabset__tab {}
-
-/* Bad - not necessary; child class is unique enough. */
-.c-tabset > .c-tabset__tab
-```
-
-<a name="classnames-and-object-composition"></a>
-### Classnames and Object Composition
-
-Order classnames in a class attribute by order of object inheritance for understandability (functionally, the order of classnames in HTML makes no difference). Separate multiple classes with TWO spaces for scannability.
-
-```html
-<!-- Good -->
-<div class="c-tutorial-nav  u-pull-left">
-
-<!-- Bad - don't use single space -->
-<div class="c-tutorial u-pull-left">
-```
 
 <a name="javascript-and-test-dependence"></a>
 ### JavaScript and Test Dependence
 
-If an item is manipulated by Javascript, it should be have a js- class purposes of selecting that element. Javascript should not query elements by any other classes.
+If an item is manipulated by Javascript, it should be have a js- class purposes of selecting that element. Javascript should only query elements by js- classes. CSS should not use js- classnames in its selectors.
 
 ```html
 <!-- Good -->
@@ -546,10 +712,16 @@ If an item is manipulated by Javascript, it should be have a js- class purposes 
 <script> tabset = $('.c-tabset'); </script>
 ```
 
+Likewise, automated tests need a test- class prefix and should select only by that classname, never by styling classes or js- classes.
+
+
+
+
+
 <a name="hover-and-focus"></a>
 ### :hover and :focus
 
-If :hover pseudo class is styled, :focus should also be styled for accessibility. Focus styles should never be removed.
+If :hover pseudo class is styled, :focus should also be styled for accessibility. Focus styles should never be removed entirely from any focusable element.
 
 ```css
 /* Good */
@@ -564,43 +736,9 @@ a:hover {
 }
 ```
 
-<a name="avoid-using-ids"></a>
-### Avoid using IDs
 
-Selectors should never use HTML element IDs. Always use classes for applying styles to specific areas of a page.
 
-```css
-/* Good */
-.c-header {
-   height: 100px;
-}
 
-/* Bad - using an ID */
-#column_wrapper {
-   height: 100px;
-}
-```
-
-<a name="width-and-height-on-components"></a>
-### Width and height on components
-
-No heights on anything that contains text. Components should be flexible and their widths should be controlled by grids.
-
-```css
-/* Good - no width specified */
-.c-calloutContent {
-    border: 1px solid #ccc;
-    background: #fff;
-}
-
-/* Bad - dimension specified */
-.c-calloutContent {
-    width: 200px;
-    height: 150px;
-    border: 1px solid #ccc;
-    background: #fff;
-}
-```
 
 
 <a name="comments"></a>
@@ -620,17 +758,27 @@ No heights on anything that contains text. Components should be flexible and the
 /* Basic one-line comment */
 ```
 
-<a name="style-documentation"></a>
-### Style Documentation
 
-We use [Hologram](trulia.github.io/hologram/) to auto-generate a live style guide (/music/style_guide). Objects and other classes are documented in specially formatted comments directly in the CSS/SASS files:
+
+
+<a name="style-documentation"></a>
+## Style Documentation
+
+We use multiple strategies to make sure the CSS library is understandable and maintainable:
+
+* SMACSS prefixes indicate different types of objects.
+* BEM classnames make structure clear on both the HTML and CSS sides.
+* Objects and other classes are documented in specially formatted comments directly in the CSS/SASS files:
+* We use [Hologram](trulia.github.io/hologram/) to auto-generate a [live style guide](//M3-SERVER/music/style_guide) from these comments, which provides a browsable inventory of components, their variants, instructions on how to use them and what they should look like.
 
 ```css
 
+<a name="doc"></a>
 /*doc
 ---
 title: Layout Grids
 name: grid
+<a name="category-layout"></a>
 category: Layout
 ---
 
