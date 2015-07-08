@@ -1,50 +1,91 @@
 # CSS code standards
 
+
+* [Introduction](#Introduction)
+* [All class names have a prefix](#All class names have a prefix)
+* [Use BEM for class names](#Use BEM for class names)
+  * [Use Hyphens between words in a block classname](#Use Hyphens between words in a classname)
+  * [Blocks](#Blocks)
+  * [Elements](#Elements)
+  * [Modifiers](#Modifiers)
+
+
+## Introduction
+
 The purpose of this document is to provide guidelines for writing CSS. Code conventions are important for the long-term maintainability of code. Most of the time, developers are maintaining code, either their own or someone else’s. The goal is to have everyone’s code look the same, which allows any developer to easily work on another developer’s code.
 
 The architecture itself is based on [OOCSS](https://github.com/stubbornella/oocss/wiki). Class naming conventions are from Harry Roberts’ post on [Namespacing CSS](http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces), incorporating aspects of [BEM](https://en.bem.info/), [SMACSS](https://smacss.com/), and [SUIT](https://github.com/suitcss/suit). 
 
 
+#### All class names have a prefix
 
-### Class Names
+Prefixes help insulate BEM classes from any legacy classnames. The different prefixes are usually a single letter, and are explained in the [music gem documentation]().
 
-BEM convention uses different delimiters to make it easier to understand the role of an element.
+```css
+/* Good */
+.c-breadcrumbs
+
+/* Bad - no prefix */
+.breadcrumbs
+```
+
+
+### Use BEM for Class Names
+
+BEM convention (Block, Element, Modifier) uses different delimiters to make it easier to understand the role of an element.
+
+#### Use Hyphens between words in a block classname
+
+```css
+/* Good */
+.c-data-table
+
+/* Bad - uses single underscore. */
+.c_data_table
+
+/* Bad - uses camel-case. */
+.c-listInlineBoxy
+```
+
+
+#### Blocks
 
 A **Block** (The parent element in an object or component) uses hyphens between words. Prefix all class names with the first letter of their type: o- Object, c- Component, l-Layout, u- Utility. See the [README](https://github.com/vhl/music/blob/library/app/assets/stylesheets/music/README.md) in the music gem library for more details.
 
 ```css
 /* Good */
-.o-list-inline {}
-.o-list-inline__list-item {}
-.c-list-inline--boxy {}
+.o-list-inline
+.o-list-inline__list-item
+.c-list-inline--boxy
 
-/* Bad - don't use unprefixed */
-.list-inline
+/* Bad - uses camel case*/
+.u-pullLeft
 
-/* Bad - don't use camel case*/
-.u-pullLeft {}
-
-/* Bad - don't use single underscores */
-.c-list_inline {}
+/* Bad - uses single underscores */
+.c-list_inline
 ```
 
-**Elements** are subclasses, or variants, of a component. They add a suffix to the base name, separated by double underscores:
+#### Elements
+
+Elements are child elements of a component. They add a suffix to the base name, separated by double underscores. 
 
 ```css
-/* Good */
+/* Good: double underscore */
 .c-list-inline__item
 
 /* Bad - looks like a block. */
 .c-list-inline-item
 ```
 
-**Modifiers** are subclasses, or variants, of a component. They add a suffix to the base name, separated by double hyphens.
+#### Modifiers
+
+Modifiers are subclasses, or variants, of a component. They add a suffix to the base name, separated by double hyphens.
 
 ```css
-/* Good */
+/* Good: double hyphen */
 .c-list-inline--boxy
 
-/* Bad */
+/* Bad - looks like a block. */
 .c-list-inline-boxy
 ```
 
@@ -243,31 +284,53 @@ Do not use !important on CSS properties. The only time this is allowed is in a u
 }
 ```
 
-### Font Sizing
+### Units
 
-All font sizes must be specified using rem only. Do not use percentages, ems or pixels.
+In general, use mod() -- this is a custom SASS function that provides measures relative to a common standard. The value of mod(1) is 1rem. Rems are like ems, but without cascading problems: if a rem = 16px, you can count on that value anywhere in the page.
+
+In order to keep things in sensible proportions, as well as improve readability, write mod values in whole numbers or fractions, but stick to halves and quarters.
+
+```css
+/* Good */
+margin: mod(1);
+padding: mod(1/2);
+
+/* Bad: uses rems directly */
+margin: 0.75rem;
+padding: 1rem;
+
+/* Bad: uses non-simple fractions */
+margin: mod(7/8);  /* too granular */
+padding: mod(3/5); /* out of proportion */
+
+```
+
+mod() should be used for all margins, padding, gutters, font sizes, etc.
+
+For borders or little tweaky things like box-shadow offsets or `margin: -1px` are fine in pixels.
+
+Ems should be used very rarely -- example: if you need to add a bit of simulated small-caps inside a heading. We don't care which heading level it is, so we specify it relative to the parent with ems. You wouldn't want to use them on an element that has further levels of hierarchy.
+
+
+
+
+### Do not use units with zero values
+
+Zero values do not require named units, omit the “px” or other unit.
 
 ```css
 /* Good */
 .c-story {
-   font-size: 1.4rem;
+   margin: 0;
 }
 
-/* Bad - uses ems */
+/* Bad - uses units */
 .c-story {
-   font-size: 1.2em;
-}
-
-/* Bad - uses percentage */
-.c-story {
-   font-size: 86%;
-}
-
-/* Bad - uses pixels */
-.c-story {
-   font-size: 14px;
+   margin: 0px;
 }
 ```
+
+
 
 ### HEX value
 
@@ -341,22 +404,6 @@ input[type='submit'] {
 ```
 
 
-### Do not use units with zero values
-
-Zero values do not require named units, omit the “px” or other unit.
-
-```css
-/* Good */
-.c-story {
-   margin: 0;
-}
-
-/* Bad - uses units */
-.c-story {
-   margin: 0px;
-}
-```
-
 ### Internet Explorer Hacks
 
 Only property hacks are allowed. To target Internet Explorer, use Internet Explorer-specific hacks like * and _ in the normal CSS files. Browser specific styles should not be in separate per-browser stylesheets. We prefer to keep all the CSS for a particular object in one place as it is more maintainable. In addition selector hacks should not be used. Classes like .ie6 increase specificity. Hacks should be kept within the CSS rule they affect and only property hacks should be used.
@@ -422,7 +469,7 @@ Use single, name-qualified selectors when styling component elements--don't use 
 .c-tabset > .c-tabset__tab
 ```
 
-### Classnames in HTML
+### Classnames and Object Composition
 
 Order classnames in a class attribute by order of object inheritance for understandability (functionally, the order of classnames in HTML makes no difference). Separate multiple classes with TWO spaces for scannability.
 
