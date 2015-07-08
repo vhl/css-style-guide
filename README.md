@@ -514,7 +514,7 @@ No heights on anything that contains text. Components should be flexible and the
 
 ### Style Documentation
 
-We use [Hologram](trulia.github.io/hologram/) to auto-generate a live style guide (/music/style_guide). Objects and other classes aree documented in specially formatted comments directly in the CSS/SASS files:
+We use [Hologram](trulia.github.io/hologram/) to auto-generate a live style guide (/music/style_guide). Objects and other classes are documented in specially formatted comments directly in the CSS/SASS files:
 
 ```css
 
@@ -525,17 +525,22 @@ name: grid
 category: Layout
 ---
 
-The long description is ideal for more detailed explanations and
-documentation. It should include example HTML for the classes in question.
-This markup should reset its indentation all the way to the left in order to
-display properly in the style guide:
+_The long description is ideal for more detailed explanations and
+documentation. It should include example HTML for the classes in question._
 
-      ```html_example
-  <div class="grid">
-    <div class="col-8">...
-    <div class="col-4">...
-  </div>
-      ```
+_Be sure to indicate what class(es) are extended by this class:_
+
+Extends `ur-grid`
+
+_**NOTE**: The example code should restart its indentation all the way to the left in order to
+display properly in the style guide (the enclosing ticks are indented here for illustration):_
+
+    ```html_example
+<div class="grid">
+  <div class="col-8">...</div>
+  <div class="col-4">...</div>
+</div>
+    ```
       
 TODO: This is a todo statement that describes an atomic task to be completed
   at a later date. It wraps after 80 characters and following lines are
