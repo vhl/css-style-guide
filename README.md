@@ -8,7 +8,7 @@ The purpose of this document is to provide guidelines for writing CSS. Code conv
 
 The architecture itself is heavily based on [OOCSS](https://github.com/stubbornella/oocss/wiki). Class naming conventions are adapted from Harry Roberts’ [More Transparent UI Code with Namespaces](http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces).
 
-If you already know the conceptual class naming stuff, you can skip right to [Coding Style](#coding-style).
+If you're already familiar with the conceptual guidelines & the class naming standards, you can skip right to [Coding Style](#coding-style).
 
 
 
