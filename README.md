@@ -1,4 +1,4 @@
-# VHL CSS Code Standards
+# OOCSS Code Standards
 
 
 <a name="introduction"></a>
