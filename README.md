@@ -75,6 +75,7 @@ Objects should provide structure (e.g., grid layout). They solve the hard proble
 Components and skins (modifiers) should determine more cosmetic aspects (color, font, border, background).
 
 
+
 <a name="separate-containers-from-content"></a>
 ### Separate Containers from Content
 
@@ -86,17 +87,14 @@ Avoid location-based styles:
 /* Bad: location-based (also: ID selector!) */
 .score {font-size: 1.1rem;}
 #footer .score {font-size: 1.4rem;}
-```
 
-
-
-```css
 /* Good */
 .score {font-size: 1.1rem;}
 .score--lg {font-size: 1.4rem;}
 ```
 
 `.score--lg` is a modifier that is placed on the same element as `.score`.
+
 
 
 <a name="component-width-and-height"></a>
@@ -145,7 +143,6 @@ span.c-button-link {}
 .c-button-link {}
 span.c-button-link {}
 ```
-
 
 
 <a name="object-composition-with-multiple-classes"></a>
@@ -203,9 +200,6 @@ Use single, name-qualified selectors when styling component elements--don't use 
 
 
 
-
-
-
 <a name="class-naming-conventions"></a>
 ## Class Naming Conventions
 
@@ -250,7 +244,6 @@ BEM convention (Block, Element, Modifier) uses different delimiters to make it e
 
 
 
-
 <a name="blocks"></a>
 #### Blocks
 
@@ -286,7 +279,6 @@ Elements are child elements of a component. They add a suffix to the base name, 
 
 
 
-
 <a name="modifiers"></a>
 #### Modifiers
 
@@ -319,7 +311,6 @@ When extending a component and styling the inner elements, use the base componen
 
 <a name="coding-style"></a>
 ## Coding Style
-
 
 
 
@@ -394,10 +385,6 @@ button, input.c-button {
   color: red;
 }
 ```
-
-
-
-
 
 
 
@@ -483,8 +470,6 @@ Do not use !important on CSS properties. The only time this is allowed is in a u
    color: red !important;
 }
 ```
-
-
 
 
 
@@ -581,7 +566,6 @@ Ems should be used very rarely -- example: if you need to add a bit of simulated
 
 
 
-
 <a name="do-not-use-units-with-zero-values"></a>
 #### Do not use units with zero values
 
@@ -601,7 +585,6 @@ Zero values do not require named units, omit the “px” or other unit.
 
 
 
-
 <a name="hex-values"></a>
 ### HEX values
 
@@ -610,17 +593,16 @@ When specifying color values in HEX, use lowercase, and if possible, 3-character
 ```css
 /* Good */
 .c-story__credit {
-    color: #ccc;
-    background-color: #1b48fa;
+  color: #ccc;
+  background-color: #1b48fa;
 }
 
 /* Bad */
 .c-story__credit {
-    color: #CCCCCC;
-    background-color: #1B48FA;
+  color: #CCCCCC;
+  background-color: #1B48FA;
 }
 ```
-
 
 
 
@@ -632,14 +614,15 @@ Strings should always use double quotes (never single quotes).
 ```css
 /* Good */
 .c-story__credit:after {
-    content: "Stubbornella";
+  content: "Stubbornella";
 }
 
 /* Bad - single quotes */
 .c-story__credit:after {
-    content: 'Stubbornella';
+  content: 'Stubbornella';
 }
 ```
+
 
 
 <a name="urls"></a>
@@ -683,6 +666,7 @@ input[type=submit] {}
 ```
 
 
+
 <a name="internet-explorer-hacks"></a>
 ### Internet Explorer Hacks
 
@@ -691,21 +675,19 @@ Only property hacks are allowed. To target Internet Explorer, use Internet Explo
 ```css
 /* Good */
 .c-assignment {
-   margin: 0;
-   _margin: -1px;
+  margin: 0;
+  _margin: -1px;
 }
 
 /* Bad - uses selector hacks */
 .c-assignment {
-   margin: 0px;
+  margin: 0;
 }
+
 .ie6 .c-assignment {
    margin: -1px;
 }
 ```
-
-
-
 
 
 
@@ -725,8 +707,6 @@ If an item is manipulated by Javascript, it should be have a js- class purposes 
 ```
 
 Likewise, automated tests need a test- class prefix and should select only by that classname, never by styling classes or js- classes.
-
-
 
 
 
@@ -750,15 +730,12 @@ a:hover {
 
 
 
-
-
-
 <a name="comments"></a>
 ### Comments
 
 ```css
 /* ==========================================================================
-   Section comment block
+    Section comment block
    ========================================================================== */
 
 /*
@@ -769,7 +746,6 @@ a:hover {
 
 /* Basic one-line comment */
 ```
-
 
 
 
