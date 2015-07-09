@@ -173,7 +173,6 @@ Selectors should NEVER use HTML element IDs, since they increase specificity and
 }
 
 /* Bad - using an ID */
-<a name="olumn_wrapper-"></a>
 #column_wrapper {
    height: 100px;
 }
