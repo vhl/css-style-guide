@@ -140,7 +140,7 @@ Do not over-qualify class name selectors with an element type unless you are spe
 span.c-button-link {}
 
 /* Good - element is providing exceptions */
-.buttonAsLink {}
+.c-button-link {}
 span.c-button-link {}
 ```
 
