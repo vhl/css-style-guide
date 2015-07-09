@@ -6,7 +6,7 @@
 
 The purpose of this document is to provide guidelines for writing CSS. Code conventions are important for the long-term maintainability of code. Most of the time, developers are maintaining code, either their own or someone else’s. The goal is to have everyone’s code look the same, which allows any developer to easily work on another developer’s code.
 
-The architecture itself is heavily based on [OOCSS](https://github.com/stubbornella/oocss/wiki). Class naming conventions are adapted from Harry Roberts’ [More Transparent UI Code with Namespaces]](http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces).
+The architecture itself is heavily based on [OOCSS](https://github.com/stubbornella/oocss/wiki). Class naming conventions are adapted from Harry Roberts’ [More Transparent UI Code with Namespaces](http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces).
 
 If you already know the conceptual class naming stuff, you can skip right to [Coding Style](#coding-style).
 
