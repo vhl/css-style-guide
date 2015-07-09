@@ -35,8 +35,8 @@ If you're already familiar with the conceptual guidelines & the class naming sta
   - [Brace Alignment](#brace-alignment)
   - [Selectors](#selectors)
   - [Properties](#properties)
-  - [Vendor-Prefixed Properties](#using-bang-important)
-  - [Using !important](#vendor-prefixed-properties)
+  - [Vendor-Prefixed Properties](#vendor-prefixed-properties)
+  - [Using !important](#using-bang-important)
   - [Using CSS Preprocessors](#using-css-preprocessors)
   - [Units](#units)
     - [Do not use units with zero values](#do-not-use-units-with-zero-values)
@@ -188,7 +188,7 @@ The only exception to this rule is when overriding existing (pre-music) CSS. Don
 <a name="avoid-compound-selectors-whenever-possible"></a>
 ### Avoid Compound Selectors Whenever Possible
 
-Use single, name-qualified selectors when styling component elements--don't use compound selectors, which will increase specificity, unless absolutely necessary.
+Use single, non-qualified selectors when styling component elements--don't use compound selectors, which will increase specificity, unless absolutely necessary.
 
 ```css
 /* Good */
@@ -302,7 +302,7 @@ When extending a component and styling the inner elements, use the base componen
 /* Bad - don't modify inner element's names */
 .c-list-inline--boxy > .c-list-inline__list-item--boxy {}
 
-/* Bad - don't create elements with the modifier in the name. */
+/* Bad - don't create child elements with the modifier in the name. */
 .c-list-inline--boxy__list-item {}
 ```
 
