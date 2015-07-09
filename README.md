@@ -35,7 +35,8 @@ If you're already familiar with the conceptual guidelines & the class naming sta
   - [Brace Alignment](#brace-alignment)
   - [Selectors](#selectors)
   - [Properties](#properties)
-  - [Vendor-Prefixed Properties](#vendor-prefixed-properties)
+  - [Vendor-Prefixed Properties](#using-bang-important)
+  - [Using !important](#vendor-prefixed-properties)
   - [Using CSS Preprocessors](#using-css-preprocessors)
   - [Units](#units)
     - [Do not use units with zero values](#do-not-use-units-with-zero-values)
@@ -124,6 +125,7 @@ Components should be flexible and their widths controlled by grids.
 }
 ```
 
+A couple limited exceptions to this guideline are constraining the size of an image or icon to fix a specific use case or to limit the length of lines of text to improve readability. If possible, only limit one dimension. Proceed carefully when defining dimensions as it limits the flexibility of the UI to adapt to various device screen sizes.
 
 
 
@@ -156,7 +158,10 @@ Order classnames in a class attribute by order of object inheritance -- order in
 <div class="o-inline-list  c-tutorial-nav  u-pull-left">
 
 <!-- Bad - don't use single space -->
-<div class="o-inline-list c-tutorial u-pull-left">
+<div class="o-inline-list c-tutorial-nav u-pull-left">
+
+<!-- Bad - not ordered by object inheritance -->
+<div class="c-tutorial-nav  u-pull-left  o-inline-list">
 ```
 
 
@@ -178,20 +183,22 @@ Selectors should NEVER use HTML element IDs, since they increase specificity and
 }
 ```
 
+The only exception to this rule is when overriding existing (pre-music) CSS. Don't use the id if it is possible to override without doing so; however, there are times that the specificity is required. Please note the reasoning in a comment.
+
 
 
 
 <a name="avoid-compound-selectors-whenever-possible"></a>
 ### Avoid Compound Selectors Whenever Possible
 
-Use single, name-qualified selectors when styling component elements--don't use compound selectors, which will increase specificity.
+Use single, name-qualified selectors when styling component elements--don't use compound selectors, which will increase specificity, unless absolutely necessary.
 
 ```css
 /* Good */
 .c-tabset__tab {}
 
 /* Bad - not necessary; child class is unique enough. */
-.c-tabset > .c-tabset__tab
+.c-tabset > .c-tabset__tab {}
 ```
 
 
@@ -212,10 +219,10 @@ Prefixes help insulate BEM classes from any legacy classnames. The different pre
 
 ```css
 /* Good */
-.c-breadcrumbs
+.c-breadcrumbs {}
 
 /* Bad - no prefix */
-.breadcrumbs
+.breadcrumbs {}
 ```
 
 
@@ -232,13 +239,13 @@ BEM convention (Block, Element, Modifier) uses different delimiters to make it e
 
 ```css
 /* Good */
-.c-data-table
+.c-data-table {}
 
 /* Bad - uses single underscore. */
-.c_data_table
+.c_data_table {}
 
 /* Bad - uses camel-case. */
-.c-listInlineBoxy
+.c-listInlineBoxy {}
 ```
 
 
@@ -251,15 +258,15 @@ A **Block** (The parent element in an object or component) uses hyphens between 
 
 ```css
 /* Good */
-.o-list-inline
-.o-list-inline__list-item
-.c-list-inline--boxy
+.o-list-inline {}
+.o-list-inline__list-item {}
+.c-list-inline--boxy {}
 
 /* Bad - uses camel case*/
-.u-pullLeft
+.u-pullLeft {}
 
 /* Bad - uses single underscores */
-.c-list_inline
+.c-list_inline {}
 ```
 
 
@@ -271,10 +278,10 @@ Elements are child elements of a component. They add a suffix to the base name, 
 
 ```css
 /* Good: double underscore */
-.c-list-inline__item
+.c-list-inline__item {}
 
 /* Bad - looks like a block. */
-.c-list-inline-item
+.c-list-inline-item {}
 ```
 
 
@@ -287,10 +294,10 @@ Modifiers are subclasses, or variants, of a component. They add a suffix to the 
 
 ```css
 /* Good: double hyphen */
-.c-list-inline--boxy
+.c-list-inline--boxy {}
 
 /* Bad - looks like a block. */
-.c-list-inline-boxy
+.c-list-inline-boxy {}
 ```
 
 When extending a component and styling the inner elements, use the base component's inner elements' class name for styling, instead of extending the class names of the inner elements as well.
@@ -298,12 +305,14 @@ When extending a component and styling the inner elements, use the base componen
 ```css
 
 /* Good - modifiers (subclasses) of components refer to unmodified inner element's names */
-.c-list-inline--boxy > .o-list-inline__list-item
+.c-list-inline--boxy > .o-list-inline__list-item {}
 
 /* Bad - don't modify inner element's names */
 .c-list-inline--boxy > .c-list-inline__list-item--boxy {}
-```
 
+/* Bad - don't create elements with the modifier in the name. */
+.c-list-inline--boxy__list-item {}
+```
 
 
 
@@ -318,13 +327,13 @@ When extending a component and styling the inner elements, use the base componen
 <a name="indentation"></a>
 ### Indentation
 
-Each indentation level is made up of two spaces. Do not use tabs. (Please set your editor to use two spaces)
+Each indentation level is made up of two spaces. Do not use tabs. (Please set your editor to use two spaces.)
 
 ```css
 /* Good */
 .c-message {
-    color: #fff;
-    background-color: #000;
+  color: #fff;
+  background-color: #000;
 }
 
 /* Bad - all on one line */
@@ -336,35 +345,33 @@ Rules inside of `@media` must be indented an additional level.
 ```css
 /* Good */
 @media screen and (max-width:480px) {
-   .c-message {
-       color: green;
-   }
+  .c-message {
+    color: green;
+  }
 }
 ```
-
-
 
 
 
 <a name="brace-alignment"></a>
 ### Brace Alignment
 
-The opening brace should be on the same line as the last selector in the rule and should be preceded by a space. The closing brace should be on its own line after the last property and be indented to the same level as the line on which the opening brace is.
+The opening brace should be on the same line as the last selector in the rule and should be preceded by a space. The closing brace should be on its own line after the last property and be indented to the same level as the line with the opening brace.
 
 ```css
 /* Good */
 .c-description {
-    color: #fff;
+  color: #fff;
 }
 
 /* Bad - closing brace is in the wrong place */
 .c-description {
-    color: #fff;
-    }
+  color: #fff;
+  }
 
 /* Bad - opening brace missing space */
 .c-description{
-    color: #fff;
+  color: #fff;
 }
 ```
 
@@ -379,12 +386,12 @@ Each selector should appear on its own line. The line should break immediately a
 /* Good */
 button,
 input.c-button {
-   color: red;
+  color: red;
 }
 
 /* Bad - selectors on one line */
 button, input.c-button {
-   color: red;
+  color: red;
 }
 ```
 
@@ -433,14 +440,14 @@ Vendor-prefixed classes should align to the left with all other properties.
 .c-directory {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
-  transition: top 0.5s;
+  border-radius: 4px;
 }
 
 /* Bad - colons aligned */
 .c-directory {
-  -webkit-border-radius:4px;
-     -moz-border-radius:4px;
-          border-radius:4px;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
 }
 ```
 
@@ -450,14 +457,18 @@ Suffix property value pairs that apply only to a particular browser or class of 
 background: #fcfcfc; /* Old browsers */
 background: -moz-linear-gradient(...); /* FF3.6+ */
 background: -webkit-gradient(...); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(...); /* Chrome10+,Safari5.1+ */
+background: -webkit-linear-gradient(...); /* Chrome10+, Safari5.1+ */
 background: -o-linear-gradient(...); /* Opera 11.10+ */
 background: -ms-linear-gradient(...); /* IE10+ */
 background: linear-gradient(...); /* W3C */
 ```
 
 Suffix fallback with “Old browsers” and standard property with “W3C”. Add a plus or minus to indicate that a property applies to all previous browsers by the same vendor or all future browsers by the same vendor.
-Using !important
+
+
+
+<a name="using-bang-important"></a>
+### Using !important
 
 Do not use !important on CSS properties. The only time this is allowed is in a u- utility style (provided by Core team).
 
@@ -642,6 +653,11 @@ When using a url() value, always use double quotes around the actual URL.
   background: url("img/logo.png");
 }
 
+/* Bad - single quotes */
+.c-header {
+  background: url('img/logo.png');
+}
+
 /* Bad - missing quotes */
 .c-header {
   background: url(img/logo.png);
@@ -657,19 +673,13 @@ Use double quotes around attribute values.
 
 ```css
 /* Good */
-input[type="submit"] {
-  ...
-}
-
-/* Bad - missing quotes */
-input[type=submit] {
-  ...
-}
+input[type="submit"] {}
 
 /* Bad - using single quote */
-input[type='submit'] {
-  ...
-}
+input[type='submit'] {}
+
+/* Bad - missing quotes */
+input[type=submit] {}
 ```
 
 
@@ -784,7 +794,8 @@ category: Layout
 ---
 
 _The long description is ideal for more detailed explanations and
-documentation. It should include example HTML for the classes in question._
+documentation. It should include a functional example of HTML for 
+the classes in question._
 
 _Be sure to indicate what class(es) are extended by this class:_
 
