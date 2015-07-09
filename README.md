@@ -62,7 +62,7 @@ If you're already familiar with the conceptual guidelines & the class naming sta
 <a name="object-oriented-css-oocss"></a>
 ## Object-Oriented CSS (OOCSS)
 
-OOCSS advocates practices which are beneficial to flexibility, code reuse, maintenance and performance.
+OOCSS advocates practices which are beneficial to flexibility, code reuse, maintenance, and performance.
 
 
 
