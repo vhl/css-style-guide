@@ -295,7 +295,7 @@ Modifiers are subclasses, or variants, of a component. They add a suffix to the 
 
 When extending a component and styling the inner elements, use the base component's inner elements' class name for styling, instead of extending the class names of the inner elements as well.
 
-Then just use a descendant (preferably child > ) selector along with the modified base classname.
+Use a descendant selector (preferably child '>' ) with the modified base classname.
 
 ```css
 
