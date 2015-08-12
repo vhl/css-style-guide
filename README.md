@@ -302,6 +302,7 @@ When extending a component and styling the inner elements, use the base componen
 
 /* Bad - don't modify inner element's names */
 .c-list-inline--boxy > .c-list-inline__list-item--boxy {}
+.c-list-inline--boxy > .c-list-inline--boxy__list-item {}
 ```
 
 
