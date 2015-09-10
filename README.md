@@ -1,4 +1,6 @@
-# OOCSS Code Standards
+# CSS Style Guide
+
+**CSS Style Guide** (Code Standards) | [Live Style Guide](https://m3a.vhlcentral.com/music/style_guide/) (Components) | [Wiki](https://github.com/vhl/music/wiki) (Concepts)
 
 
 <a name="introduction"></a>
