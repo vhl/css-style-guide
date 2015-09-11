@@ -631,7 +631,7 @@ BEM convention (Block, Element, Modifier) uses different delimiters to make it e
 <a name="blocks"></a>
 #### Blocks
 
-A **Block** (The parent element in an object or component) uses hyphens between words. Prefix all class names with the first letter of their type: o- Object, c- Component, l-Layout, u- Utility. See the [README](https://github.com/vhl/music/blob/library/app/assets/stylesheets/music/README.md) in the music gem library for more details.
+A **Block** (The parent element in an object or component) uses hyphens between words. [Prefix all class names](#use-smacss-prefixes-to-distinguish-classes-with-different-roles).
 
 ```css
 /* Good */
