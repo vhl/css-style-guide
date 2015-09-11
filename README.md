@@ -134,7 +134,7 @@ button, input.c-button {
 }
 ```
 
-
+IMPORTANT: **Never use id's in  selectors**. They have very high specificity compared to classes, and can't be used more than once on the same page.
 
 
 
@@ -258,9 +258,20 @@ Keep nesting to 2 levels deep, 3 absolute max.
 }
 ```
 
-Declare `@extend` before other properties. Keep in mind that extending via multiple classes in the markup should be preferred over SASS '@extend' in the majority of cases.
+
+Multiple classes:
+
+Extending classes: favor multiple classes over SASS @extend. Only use @mixins if they are parameterized. Otherwise it results in CSS code bloat.
+
+```HTML
+<div class="o-module  c-strand-list  u-closer"> (two spaces between each class)
+```
+
+
+When `@extend` _is_ used, declare it _before_ other properties:
 
 ```css
+
 /* Good */
 .c-stubbornella {
     @extend .c-company;
@@ -276,12 +287,7 @@ Declare `@extend` before other properties. Keep in mind that extending via multi
 }
 <div class="c-company  c-stubbornella">...</div>
 
-/* Bad */
-.c-stubbornella {
-    color: #555;
-    @extend .company;
-    padding: 2rem;
-}
+
 ```
 
 
