@@ -2,7 +2,7 @@
 
 _Coding standards for stylesheets_
 
-Related: **[Live Style Guide](https://m3a.vhlcentral.com/music/style_guide/)** (Components) | ** [Wiki](https://github.com/vhl/music/wiki)** (Concepts)
+Related: **[Live Style Guide](https://m3a.vhlcentral.com/music/style_guide/)** (Components) |  **[Wiki](https://github.com/vhl/music/wiki)** (Concepts)
 
 <a name="introduction"></a>
 ## Introduction
