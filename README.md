@@ -46,6 +46,7 @@ The purpose of this document is to provide guidelines for writing CSS. Code conv
     - [Blocks](#blocks)
     - [Elements](#elements)
     - [Modifiers](#modifiers)
+  - [Multiple Classes on an Element](#multiple-classes-on-an-element)
 - [Style Documentation](#style-documentation)
 
 <!-- /MarkdownTOC -->
@@ -689,6 +690,21 @@ Use a descendant selector (preferably child '>' ) with the modified base classna
 .c-list-inline--boxy > .c-list-inline--boxy__list-item {}
 ```
 
+
+<a name="multiple-classes-on-an-element"></a>
+### Multiple Classes on an Element
+
+In HTML, order classnames in a class attribute by order of object inheritance -- order in the class attribute does not matter functionally, but helps make the inheritance chain more apparent. 
+
+Separate multiple classes with TWO spaces for readability:
+
+```html
+<!-- Good -->
+<div class="o-inline-list  c-tutorial-nav  u-pull-left">
+
+<!-- Bad - don't use single space -->
+<div class="o-inline-list c-tutorial u-pull-left">
+```
 
 
 
