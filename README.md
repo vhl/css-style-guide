@@ -31,16 +31,16 @@ The purpose of this document is to provide guidelines for writing CSS. Code conv
   - [Comments](#comments)
 - [Classname Conventions](#classname-conventions)
   - [Use SMACSS prefixes to distinguish classes with different roles.](#use-smacss-prefixes-to-distinguish-classes-with-different-roles)
-    - [**c- Component**](#c--component)
-    - [**o- Object**](#o--object)
-    - [**is-, has- States**](#is--has--states)
-    - [**t- Theme**](#t--theme)
-    - [**u- utility**](#u--utility)
-    - [**ns- Namespace**.](#ns--namespace)
-    - [**_ a Hack**.](#_-a-hack)
-    - [**js- Javascript**.](#js--javascript)
-    - [**test- Test**.](#test--test)
-    - [**s- Scope**.](#s--scope)
+    - [c- Component](#c--component)
+    - [o- Object](#o--object)
+    - [is-, has- States](#is--has--states)
+    - [t- Theme](#t--theme)
+    - [u- utility](#u--utility)
+    - [ns- Namespace.](#ns--namespace)
+    - [_ a Hack.](#_-a-hack)
+    - [js- Javascript.](#js--javascript)
+    - [test- Test.](#test--test)
+    - [s- Scope.](#s--scope)
   - [Use BEM to reflect component structure](#use-bem-to-reflect-component-structure)
     - [Use Hyphens between words in a block classname](#use-hyphens-between-words-in-a-block-classname)
     - [Blocks](#blocks)
@@ -54,9 +54,6 @@ The purpose of this document is to provide guidelines for writing CSS. Code conv
 
 <a name="coding-style"></a>
 ## Coding Style
-
-
-
 
 
 <a name="indentation"></a>
@@ -135,8 +132,6 @@ button, input.c-button {
 ```
 
 IMPORTANT: **Never use id's in  selectors**. They have very high specificity compared to classes, and can't be used more than once on the same page.
-
-
 
 
 
@@ -258,7 +253,6 @@ Keep nesting to 2 levels deep, 3 absolute max.
 }
 ```
 
-
 Multiple classes:
 
 Extending classes: favor multiple classes over SASS @extend. Only use @mixins if they are parameterized. Otherwise it results in CSS code bloat.
@@ -271,6 +265,12 @@ Extending classes: favor multiple classes over SASS @extend. Only use @mixins if
 When `@extend` _is_ used, declare it _before_ other properties:
 
 ```css
+/* Bad */
+.c-stubbornella {
+    color: #555;
+    @extend .company;
+    padding: 2rem;
+}
 
 /* Good */
 .c-stubbornella {
@@ -280,14 +280,12 @@ When `@extend` _is_ used, declare it _before_ other properties:
 }
 <div class="stubbornella">...</div>
 
-/* Better */
+/* Better -- uses multi-class inheritance. */
 .c-stubbornella {
     color: #555;
     padding: 2rem;
 }
 <div class="c-company  c-stubbornella">...</div>
-
-
 ```
 
 
@@ -534,14 +532,14 @@ All classnames should have a prefix. Prefixes help insulate new classnames from 
 
 
 <a name="c--component"></a>
-#### **c- Component**
+#### c- Component
 This is a UI-specific implementation of a design pattern. Editing these styles is
 relatively safe, in that only instances of this component will be affected.
 Examples: Table of Contents, Work Set, Flashcard.
 
 
 <a name="o--object"></a>
-#### **o- Object**
+#### o- Object
 
 These are a kind of base class that gets re-used
 by components. DANGER: do not modify these unless you really
@@ -550,19 +548,19 @@ They are usually based on minor *visual* patterns in the design
 (e.g., media object = "float" an image right without wrapping text)
 
 <a name="is--has--states"></a>
-#### **is-, has- States**
+#### is-, has- States
 
 Specifies that the object or components currently is in a
 particular (temporary) state. Examples: .is-expanded, .has-lessons,
 .is-published
 
 <a name="t--theme"></a>
-#### **t- Theme**
+#### t- Theme
 
 Set at a high level (body or top of view). Used to switch color palettes and possibly some other SASS variables. We will use a theme as part of SuperSite vs Portales differentiation.
 
 <a name="u--utility"></a>
-#### **u- utility**
+#### u- utility
 
 Does something simple that is just a quick override,
 e.g., .txtR to align text right for a particular element. Usually they
@@ -571,13 +569,13 @@ These styles should not be changed, since they will have side-effects in
 unpredictable places.
 
 <a name="ns--namespace"></a>
-#### **ns- Namespace**.
+#### ns- Namespace.
 
 `ns-newcsslib` is used to insulate pages or sections so that styles from this library apply there, but not anywhere else. Any other namespace classes should be used extremely sparingly. They are meant to be temporary.
 
 
 <a name="_-a-hack"></a>
-#### **_ a Hack**.
+#### _ a Hack.
 
 Used sparingly for cross-browser compatibility. Example:
 
@@ -586,17 +584,17 @@ Used sparingly for cross-browser compatibility. Example:
 ```
 
 <a name="js--javascript"></a>
-#### **js- Javascript**.
+#### js- Javascript.
 
 Used for scripting hooks only. Scripts should not make reference to any other classes.
 
 <a name="test--test"></a>
-#### **test- Test**.
+#### test- Test.
 
 Used for automated testing hooks only. Test scripts should not make reference to any other classes.
 
 <a name="s--scope"></a>
-#### **s- Scope**.
+#### s- Scope.
 
 Resets all the styles for a given context, by brute force. Would only be used in very specific scenarios. We're not using this currently.
 
