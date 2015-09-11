@@ -12,7 +12,6 @@ The purpose of this document is to provide guidelines for writing CSS. Code conv
 
 <!-- MarkdownTOC -->
 
-
 - [Coding Style](#coding-style)
   - [Indentation](#indentation)
   - [Brace Alignment](#brace-alignment)
@@ -30,6 +29,23 @@ The purpose of this document is to provide guidelines for writing CSS. Code conv
   - [JavaScript and Test Dependence](#javascript-and-test-dependence)
   - [:hover and :focus](#hover-and-focus)
   - [Comments](#comments)
+- [Classname Conventions](#classname-conventions)
+  - [Use SMACSS prefixes to distinguish classes with different roles.](#use-smacss-prefixes-to-distinguish-classes-with-different-roles)
+    - [**c- Component**](#c--component)
+    - [**o- Object**](#o--object)
+    - [**is-, has- States**](#is--has--states)
+    - [**t- Theme**](#t--theme)
+    - [**u- utility**](#u--utility)
+    - [**ns- Namespace**.](#ns--namespace)
+    - [**_ a Hack**.](#_-a-hack)
+    - [**js- Javascript**.](#js--javascript)
+    - [**test- Test**.](#test--test)
+    - [**s- Scope**.](#s--scope)
+  - [Use BEM to reflect component structure](#use-bem-to-reflect-component-structure)
+    - [Use Hyphens between words in a block classname](#use-hyphens-between-words-in-a-block-classname)
+    - [Blocks](#blocks)
+    - [Elements](#elements)
+    - [Modifiers](#modifiers)
 - [Style Documentation](#style-documentation)
 
 <!-- /MarkdownTOC -->
@@ -489,6 +505,188 @@ a:hover {
 
 /* Basic one-line comment */
 ```
+
+<a name="classname-conventions"></a>
+## Classname Conventions
+
+<a name="use-smacss-prefixes-to-distinguish-classes-with-different-roles"></a>
+### Use SMACSS prefixes to distinguish classes with different roles.
+
+**SMACSS** (Scalable and Modular Architecture for CSS) advocates grouping different types
+of classes based on their function. The following is a slightly modified version:
+
+All classnames should have a prefix. Prefixes help insulate new classnames from legacy classnames. The different prefixes are usually a single letter, and are explained in the following section. 
+
+```css
+/* Good */
+.c-breadcrumbs
+
+/* Bad - no prefix */
+.breadcrumbs
+```
+
+
+
+<a name="c--component"></a>
+#### **c- Component**
+This is a UI-specific implementation of a design pattern. Editing these styles is
+relatively safe, in that only instances of this component will be affected.
+Examples: Table of Contents, Work Set, Flashcard.
+
+
+<a name="o--object"></a>
+#### **o- Object**
+
+These are a kind of base class that gets re-used
+by components. DANGER: do not modify these unless you really
+know what you're doing. Could cause all kinds of mischief.
+They are usually based on minor *visual* patterns in the design
+(e.g., media object = "float" an image right without wrapping text)
+
+<a name="is--has--states"></a>
+#### **is-, has- States**
+
+Specifies that the object or components currently is in a
+particular (temporary) state. Examples: .is-expanded, .has-lessons,
+.is-published
+
+<a name="t--theme"></a>
+#### **t- Theme**
+
+Set at a high level (body or top of view). Used to switch color palettes and possibly some other SASS variables. We will use a theme as part of SuperSite vs Portales differentiation.
+
+<a name="u--utility"></a>
+#### **u- utility**
+
+Does something simple that is just a quick override,
+e.g., .txtR to align text right for a particular element. Usually they
+are defined with a single style rule. You shouldn't be using these a lot.
+These styles should not be changed, since they will have side-effects in
+unpredictable places.
+
+<a name="ns--namespace"></a>
+#### **ns- Namespace**.
+
+`ns-newcsslib` is used to insulate pages or sections so that styles from this library apply there, but not anywhere else. Any other namespace classes should be used extremely sparingly. They are meant to be temporary.
+
+
+<a name="_-a-hack"></a>
+#### **_ a Hack**.
+
+Used sparingly for cross-browser compatibility. Example:
+
+```CSS
+._media {zoom:1} /* Gives element 'has-layout' in IE */
+```
+
+<a name="js--javascript"></a>
+#### **js- Javascript**.
+
+Used for scripting hooks only. Scripts should not make reference to any other classes.
+
+<a name="test--test"></a>
+#### **test- Test**.
+
+Used for automated testing hooks only. Test scripts should not make reference to any other classes.
+
+<a name="s--scope"></a>
+#### **s- Scope**.
+
+Resets all the styles for a given context, by brute force. Would only be used in very specific scenarios. We're not using this currently.
+
+
+
+
+
+
+
+<a name="use-bem-to-reflect-component-structure"></a>
+### Use BEM to reflect component structure
+
+BEM convention (Block, Element, Modifier) uses different delimiters to make it easier to understand the role of an element.
+
+
+
+<a name="use-hyphens-between-words-in-a-block-classname"></a>
+#### Use Hyphens between words in a block classname
+
+```css
+/* Good */
+.c-data-table
+
+/* Bad - uses single underscore. */
+.c_data_table
+
+/* Bad - uses camel-case. */
+.c-listInlineBoxy
+```
+
+
+
+
+<a name="blocks"></a>
+#### Blocks
+
+A **Block** (The parent element in an object or component) uses hyphens between words. Prefix all class names with the first letter of their type: o- Object, c- Component, l-Layout, u- Utility. See the [README](https://github.com/vhl/music/blob/library/app/assets/stylesheets/music/README.md) in the music gem library for more details.
+
+```css
+/* Good */
+.o-list-inline
+.o-list-inline__list-item
+.c-list-inline--boxy
+
+/* Bad - uses camel case*/
+.u-pullLeft
+
+/* Bad - uses single underscores */
+.c-list_inline
+```
+
+
+
+<a name="elements"></a>
+#### Elements
+
+Elements are child elements of a component. They add a suffix to the base name, separated by double underscores.
+
+```css
+/* Good: double underscore */
+.c-list-inline__item
+
+/* Bad - looks like a block. */
+.c-list-inline-item
+```
+
+
+
+<a name="modifiers"></a>
+#### Modifiers
+
+Modifiers are subclasses, or variants, of a component. They add a suffix to the base name, separated by double hyphens.
+
+```css
+/* Good: double hyphen */
+.c-list-inline--boxy
+
+/* Bad - looks like a block. */
+.c-list-inline-boxy
+```
+
+When extending a component and styling the inner elements, use the base component's inner elements' class name for styling, instead of extending the class names of the inner elements as well.
+
+Use a descendant selector (preferably child '>' ) with the modified base classname.
+
+```css
+
+/* Good - modifiers (subclasses) of components refer to unmodified inner element's names */
+.c-list-inline--boxy > .o-list-inline__list-item
+
+/* Bad - don't modify inner element's names */
+.c-list-inline--boxy > .c-list-inline__list-item--boxy {}
+.c-list-inline--boxy > .c-list-inline--boxy__list-item {}
+```
+
+
 
 
 
