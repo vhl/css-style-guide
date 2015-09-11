@@ -81,10 +81,9 @@ Rules inside of `@media` must be indented an additional level.
        color: green;
    }
 }
-
-Strict BEM says to indent child elements, but this can easily be confused for nesting. Keep child elements at the same indentation level as their parent (unless they actually _are_ nested for specificity reasons).
 ```
 
+Strict BEM says to indent child elements, but this can easily be confused for nesting. Keep child elements at the same indentation level as their parent (unless they actually _are_ nested for specificity reasons). **NOTE: Considering reinstating indentation of child elements.**
 
 
 
