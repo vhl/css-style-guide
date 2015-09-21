@@ -41,11 +41,12 @@ The purpose of this document is to provide guidelines for writing CSS. Code conv
     - [js- Javascript.](#js--javascript)
     - [test- Test.](#test--test)
     - [s- Scope.](#s--scope)
-  - [Use BEM to reflect component structure](#use-bem-to-reflect-component-structure)
+  - [Use BEM to reflect Component structure](#use-bem-to-reflect-component-structure)
     - [Use Hyphens between words in a block classname](#use-hyphens-between-words-in-a-block-classname)
     - [Blocks](#blocks)
     - [Elements](#elements)
     - [Modifiers](#modifiers)
+  - [Multiple Classes on an Element](#multiple-classes-on-an-element)
 - [Style Documentation](#style-documentation)
 
 <!-- /MarkdownTOC -->
@@ -604,10 +605,9 @@ Resets all the styles for a given context, by brute force. Would only be used in
 
 
 <a name="use-bem-to-reflect-component-structure"></a>
-### Use BEM to reflect component structure
+### Use BEM to reflect Component structure
 
-BEM convention (Block, Element, Modifier) uses different delimiters to make it easier to understand the role of an element.
-
+BEM convention (Block, Element, Modifier) uses different delimiters to make it easier to understand the role of an element:
 
 
 <a name="use-hyphens-between-words-in-a-block-classname"></a>
@@ -631,6 +631,8 @@ BEM convention (Block, Element, Modifier) uses different delimiters to make it e
 #### Blocks
 
 A **Block** (The parent element in an object or component) uses hyphens between words. [Prefix all class names](#use-smacss-prefixes-to-distinguish-classes-with-different-roles).
+
+We usually refer to these as **base classes**.
 
 ```css
 /* Good */
@@ -665,7 +667,7 @@ Elements are child elements of a component. They add a suffix to the base name, 
 <a name="modifiers"></a>
 #### Modifiers
 
-Modifiers are subclasses, or variants, of a component. They add a suffix to the base name, separated by double hyphens.
+Modifiers are subclasses, or **variants**, of a component. They add a suffix to the base name, separated by double hyphens.
 
 ```css
 /* Good: double hyphen */
@@ -690,6 +692,29 @@ Use a descendant selector (preferably child '>' ) with the modified base classna
 ```
 
 
+
+<a name="multiple-classes-on-an-element"></a>
+### Multiple Classes on an Element
+
+In HTML, order classnames in a class attribute by order of object inheritance -- order in the class attribute does not matter functionally, but helps make the inheritance chain more apparent. 
+
+Separate multiple classes with TWO spaces for readability:
+
+```html
+<!-- Good -->
+<div class="o-inline-list  c-tutorial-nav  u-pull-left">
+
+<!-- Bad - don't use single space -->
+<div class="o-inline-list c-tutorial u-pull-left">
+```
+
+The classes should follow this order:
+
+```html
+<div class="[object]  [base]  [modifier  [modifier]]  [state]  [utility]  [javascript hooks]  [test hooks]">
+```
+
+This is by convention--functionality, in contrast to CSS, order of classes in HTML doesn't matter.
 
 
 
