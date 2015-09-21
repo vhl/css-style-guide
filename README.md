@@ -714,12 +714,15 @@ name: grid
 category: Layout
 ---
 
-_The long description is ideal for more detailed explanations and
+_The body text is ideal for more detailed explanations and
 documentation. It should include example HTML for the classes in question._
 
 _Be sure to indicate what class(es) are extended by this class:_
 
 Extends `ur-grid`
+
+Extends `<a href>`
+
 
 _**NOTE**: The example code should restart its indentation all the way to the left in order to
 display properly in the style guide (the enclosing ticks are indented here for illustration):_
@@ -737,3 +740,26 @@ TODO: This is a todo statement that describes an atomic task to be completed
 */
 
 ```
+
+In the doc header (the "front matter" between triple hyphens):
+
+* *title* and *category* values should be capitalized.
+* *name* values should be lowercase, with hyphens as word separators. Component docs are sorted by name, so plan accordingly.
+* Don't include class prefixes in titles, names, or categories.
+* Try to keep category names to a single word.
+
+You can organize docs hierarchically by specifying a *parent* instead of a category. Such "child" elements will be listed in alphabetic order below the parent and inherit the parent's category. The parent value should match the *name* of another component.
+
+```css
+/*doc
+---
+title: Inner Grid
+name: grid-inner
+parent: grid
+---
+*/
+```
+
+
+
+
