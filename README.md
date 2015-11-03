@@ -16,7 +16,7 @@ The purpose of this document is to provide guidelines for writing CSS. Code conv
   - [Separate Structure from Skin](#separate-structure-from-skin)
   - [Separate Containers from Content](#separate-containers-from-content)
     - [Component Width and Height](#component-width-and-height)
-  - [Class Qualification](#class-qualification)
+  - [Element Qualification](#element-qualification)
   - [Object Composition with Multiple Classes](#object-composition-with-multiple-classes)
   - [Avoid using IDs](#avoid-using-ids)
   - [Avoid Compound Selectors Whenever Possible](#avoid-compound-selectors-whenever-possible)
@@ -142,10 +142,12 @@ A couple limited exceptions to this guideline are constraining the size of an im
 
 
 
-<a name="class-qualification"></a>
-### Class Qualification
+<a name="element-qualification"></a>
+### Element Qualification
 
 Do not over-qualify class name selectors with an element type unless you are specifying exceptions to the default styling of a particular class. Leaving out the element name makes the class reusable on different kinds of elements.
+
+NOTE: Only use valid HTML5 tags. In come cases, custom tags are passed through from XML, and become part of CSS selectors. They will work fine in supported browsers, but should (eventually) be converted to valid tags with classes. 
 
 ```css
 /* Good */
@@ -633,17 +635,19 @@ When specifying color values in HEX, use lowercase, and if possible, 3-character
 <a name="string-literals"></a>
 ### String Literals
 
-Strings should always use double quotes (never single quotes).
+Strings should always use single quotes (never double quotes).
 
 ```css
-/* Good */
-.c-story__credit:after {
-  content: "Stubbornella";
-}
-
-/* Bad - single quotes */
+/* Good: single quotes */
 .c-story__credit:after {
   content: 'Stubbornella';
+  background: transparent url('beachball.png');
+}
+
+/* Bad - double quotes */
+.c-story__credit:after {
+  content: "Stubbornella";
+  background: transparent url("beachball.png");
 }
 ```
 
