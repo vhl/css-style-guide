@@ -633,17 +633,19 @@ When specifying color values in HEX, use lowercase, and if possible, 3-character
 <a name="string-literals"></a>
 ### String Literals
 
-Strings should always use double quotes (never single quotes).
+Strings should always use single quotes (never double quotes).
 
 ```css
-/* Good */
-.c-story__credit:after {
-  content: "Stubbornella";
-}
-
-/* Bad - single quotes */
+/* Good: single quotes */
 .c-story__credit:after {
   content: 'Stubbornella';
+  background: transparent url('beachball.png');
+}
+
+/* Bad - double quotes */
+.c-story__credit:after {
+  content: "Stubbornella";
+  background: transparent url("beachball.png");
 }
 ```
 
