@@ -147,6 +147,8 @@ A couple limited exceptions to this guideline are constraining the size of an im
 
 Do not over-qualify class name selectors with an element type unless you are specifying exceptions to the default styling of a particular class. Leaving out the element name makes the class reusable on different kinds of elements.
 
+NOTE: Only use valid HTML5 tags. In come cases, custom tags are passed through from XML, and become part of CSS selectors. These should (eventually) be converted to valid tags with classes.
+
 ```css
 /* Good */
 .c-button-link {}
