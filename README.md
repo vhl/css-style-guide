@@ -12,7 +12,7 @@ The purpose of this document is to provide guidelines for writing CSS. Code conv
 
 <!-- MarkdownTOC -->
 
-- [Object-Oriented CSS (OOCSS)](#object-oriented-css-oocss)
+- [Object-Oriented CSS \(OOCSS\)](#object-oriented-css-oocss)
   - [Separate Structure from Skin](#separate-structure-from-skin)
   - [Separate Containers from Content](#separate-containers-from-content)
     - [Component Width and Height](#component-width-and-height)
@@ -35,6 +35,9 @@ The purpose of this document is to provide guidelines for writing CSS. Code conv
   - [Vendor-Prefixed Properties](#vendor-prefixed-properties)
   - [Using !important](#using-important)
   - [Using CSS Preprocessors](#using-css-preprocessors)
+    - [Keep nesting to 3 levels deep, 4 absolute max.](#keep-nesting-to-3-levels-deep-4-absolute-max)
+    - [Multiple classes:](#multiple-classes)
+    - [Avoid @at-root](#avoid-at-root)
   - [Units](#units)
     - [Do not use units with zero values](#do-not-use-units-with-zero-values)
   - [HEX values](#hex-values)
@@ -53,7 +56,7 @@ The purpose of this document is to provide guidelines for writing CSS. Code conv
     - [t- Theme](#t--theme)
     - [u- utility](#u--utility)
     - [ns- Namespace.](#ns--namespace)
-    - [_ a Hack.](#_-a-hack)
+    - [_ a Hack.](#-a-hack)
     - [js- Javascript.](#js--javascript)
     - [test- Test.](#test--test)
     - [s- Scope.](#s--scope)
@@ -493,7 +496,8 @@ Do not use !important on CSS properties. The only time this is allowed is in a u
 <a name="using-css-preprocessors"></a>
 ### Using CSS Preprocessors
 
-Keep nesting to 2 levels deep, 3 absolute max.
+<a name="keep-nesting-to-3-levels-deep-4-absolute-max"></a>
+#### Keep nesting to 3 levels deep, 4 absolute max.
 
 ```css
 /* Good */
@@ -525,28 +529,29 @@ Keep nesting to 2 levels deep, 3 absolute max.
 }
 ```
 
-Multiple classes:
+<a name="multiple-classes"></a>
+#### Multiple classes:
 
-Extending classes: favor multiple classes over SASS @extend. Only use @mixins if they are parameterized. Otherwise it results in CSS code bloat.
+Extending classes: favor multiple classes over SASS @extend. Favor @mixins over @extends. Really, don't use @extends if you can help it.
 
 ```HTML
 <div class="o-module  c-strand-list  u-closer"> (two spaces between each class)
 ```
 
 
-When `@extend` _is_ used, declare it _before_ other properties:
+When `@include` _is_ used, declare it _before_ other properties:
 
 ```css
 /* Bad */
 .c-stubbornella {
     color: #555;
-    @extend .company;
+    @include company();
     padding: 2rem;
 }
 
 /* Good */
 .c-stubbornella {
-    @extend .c-company;
+    @include company();
     color: #555;
     padding: 2rem;
 }
@@ -560,6 +565,11 @@ When `@extend` _is_ used, declare it _before_ other properties:
 <div class="c-company  c-stubbornella">...</div>
 ```
 
+<a name="avoid-at-root"></a>
+#### Avoid @at-root
+
+`@at-root` is a special Sass directive that resets the selector. Avoid its use, as it will interefere with our reliance on namespaces on the `<body>`.
+
 
 
 <a name="units"></a>
@@ -569,24 +579,25 @@ In general, use mod() -- this is a custom SASS function that provides measures r
 
 In order to keep things in sensible proportions, as well as improve readability, write mod values in whole numbers or fractions, but stick to halves and quarters.
 
+Also be sure to put spaces around operators in expressions.
+
 ```css
 /* Good */
 margin: mod(1);
-padding: mod(1/2);
+padding: mod(1 / 2);
 
 /* Bad: uses rems directly */
 margin: 0.75rem;
 padding: 1rem;
 
-/* Bad: uses non-simple fractions */
-margin: mod(7/8);  /* too granular */
-padding: mod(3/5); /* out of proportion */
-
+/* Bad: uses fractions unrelated to the base unit,
+   and no spaces around operator: */
+padding: mod(3/5);
 ```
 
 mod() should be used for all margins, padding, gutters, font sizes, etc.
 
-For borders or little tweaky things like box-shadow offsets or `margin: -1px` are fine in pixels.
+Pixel lengths are discouraged, but not blanket verboten! For little tweaky things like box-shadow offsets or `margin: -1px`, they are fine.
 
 Ems should be used very rarely -- example: if you need to add a bit of simulated small-caps inside a heading. We don't care which heading level it is, so we specify it relative to the parent with ems. You wouldn't want to use them on an element that has further levels of hierarchy.
 
@@ -839,7 +850,7 @@ unpredictable places.
 `ns-newcsslib` is used to insulate pages or sections so that styles from this library apply there, but not anywhere else. Any other namespace classes should be used extremely sparingly. They are meant to be temporary.
 
 
-<a name="_-a-hack"></a>
+<a name="-a-hack"></a>
 #### _ a Hack.
 
 Used sparingly for cross-browser compatibility. Example:
@@ -1049,7 +1060,3 @@ parent: grid
 ---
 */
 ```
-
-
-
-
