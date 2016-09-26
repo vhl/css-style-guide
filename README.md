@@ -422,19 +422,21 @@ button, input.c-button {
 
 * Type selectors (addressing elements by their tag name) should be defined early in the cascade and then never used again unless absolutely necessary.
 
-* Selectors consisting of a single class should make up the majority of your CSS. A second class should generally only be added for states. 
+* **Selectors consisting of a single class** should make up the majority of your CSS. A second class should generally only be added for states. 
 
 * **NEVER use id's in selectors**. They have very high specificity compared to classes, and can't be used more than once on the same page.
 
 * For the same reason, **NEVER use inline styles**. They are near-impossible to override without resorting to JavaScript.
 
-* It should go without saying, **don't use `!important`** except in rare cases.
+* It should go without saying, **don't use `!important`** except in rare cases:
+  * Utilities use it to override any previous values.
+  * Overriding any high-specificity styles we don't have control over.
 
 
 <a name="keep-depth-of-applicability-low"></a>
 #### Keep depth of applicability low.
 
-Keep combinators (whitespace, `>`, `+`, `~`,) to a minimum. Favor direct-child combinator `>` over descendant (whitespace).
+Keep combinators (whitespace, `>`, `+`, `~`,) to a minimum. Favor direct-child combinator (`>`) over descendant (whitespace).
 
 `.c-super-table a {...}` can get you in trouble later when you want to override that link style using `.special` -- better to add a `.c-super-table__link` in the first example to keep both depth of applicability and specificity low. A single class selector can always be overridden by a single class selector later in the cascade.
 
