@@ -350,10 +350,11 @@ Each indentation level is made up of two spaces. Do not use tabs. (Please set yo
 ```
 
 ```
-In the case of single selector, single property rules, one line is acceptable:
+In the case of single selector, single property rules, one line is acceptable.
+Leave one space inside the brackets.
 
 /* Fine - one selector, one property */
-.c-alert {font-weight: bold;}
+.c-alert { font-weight: bold; }
 ```
 
 
