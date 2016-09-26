@@ -31,8 +31,11 @@ The purpose of this document is to provide guidelines for writing CSS. Code conv
   - [Indentation](#indentation)
   - [Brace Alignment](#brace-alignment)
   - [Selectors](#selectors)
+    - [One selector per line](#one-selector-per-line)
+    - [Keep specificity low.](#keep-specificity-low)
+    - [Keep depth of applicability low.](#keep-depth-of-applicability-low)
   - [Properties](#properties)
-  - [Vendor-Prefixed Properties](#vendor-prefixed-properties)
+  - [No Vendor-Prefixed Properties](#no-vendor-prefixed-properties)
   - [Using !important](#using-important)
   - [Using CSS Preprocessors](#using-css-preprocessors)
     - [Keep nesting to 3 levels deep, 4 absolute max.](#keep-nesting-to-3-levels-deep-4-absolute-max)
@@ -44,14 +47,12 @@ The purpose of this document is to provide guidelines for writing CSS. Code conv
   - [String Literals](#string-literals)
   - [URLs](#urls)
   - [Attribute values in selectors](#attribute-values-in-selectors)
-  - [Internet Explorer Hacks](#internet-explorer-hacks)
   - [JavaScript and Test Dependence](#javascript-and-test-dependence)
   - [:hover and :focus](#hover-and-focus)
   - [Comments](#comments)
 - [Classname Conventions](#classname-conventions)
   - [Use SMACSS prefixes to distinguish classes with different roles.](#use-smacss-prefixes-to-distinguish-classes-with-different-roles)
     - [c- Component](#c--component)
-    - [o- Object](#o--object)
     - [is-, has- States](#is--has--states)
     - [t- Theme](#t--theme)
     - [u- utility](#u--utility)
@@ -172,10 +173,10 @@ Order classnames in a class attribute by order of object inheritance -- order in
 
 ```html
 <!-- Good -->
-<div class="o-inline-list  c-tutorial-nav  u-pull-left">
+<div class="c-inline-list  c-tutorial-nav  u-pull-left">
 
 <!-- Bad - don't use single space -->
-<div class="o-inline-list c-tutorial-nav u-pull-left">
+<div class="c-inline-list c-tutorial-nav u-pull-left">
 
 <!-- Bad - not ordered by object inheritance -->
 <div class="c-tutorial-nav  u-pull-left  o-inline-list">
@@ -348,6 +349,15 @@ Each indentation level is made up of two spaces. Do not use tabs. (Please set yo
 .c-message {color: #fff; background-color: #000;}
 ```
 
+```
+In the case of single selector, single property rules, one line is acceptable.
+Leave one space inside the brackets.
+
+/* Fine - one selector, one property */
+.c-alert { font-weight: bold; }
+```
+
+
 Rules inside of `@media` must be indented an additional level.
 
 ```css
@@ -389,6 +399,9 @@ The opening brace should be on the same line as the last selector in the rule an
 <a name="selectors"></a>
 ### Selectors
 
+<a name="one-selector-per-line"></a>
+#### One selector per line
+
 Each selector should appear on its own line. The line should break immediately after the comma. Each selector should be aligned to the same left column.
 
 ```css
@@ -404,8 +417,28 @@ button, input.c-button {
 }
 ```
 
-IMPORTANT: **Never use id's in  selectors**. They have very high specificity compared to classes, and can't be used more than once on the same page.
+<a name="keep-specificity-low"></a>
+#### Keep specificity low.
 
+* Type selectors (addressing elements by their tag name) should be defined early in the cascade and then never used again unless absolutely necessary.
+
+* **Selectors consisting of a single class** should make up the majority of your CSS. A second class should generally only be added for states. 
+
+* **NEVER use id's in selectors**. They have very high specificity compared to classes, and can't be used more than once on the same page.
+
+* For the same reason, **NEVER use inline styles**. They are near-impossible to override without resorting to JavaScript.
+
+* It should go without saying, **don't use `!important`** except in rare cases:
+  * Utilities use it to override any previous values.
+  * Overriding any high-specificity styles we don't have control over.
+
+
+<a name="keep-depth-of-applicability-low"></a>
+#### Keep depth of applicability low.
+
+Keep combinators (whitespace, `>`, `+`, `~`,) to a minimum. Favor direct-child combinator (`>`) over descendant (whitespace).
+
+`.c-super-table a {...}` can get you in trouble later when you want to override that link style using `.special` -- better to add a `.c-super-table__link` in the first example to keep both depth of applicability and specificity low. A single class selector can always be overridden by a single class selector later in the cascade.
 
 
 <a name="properties"></a>
@@ -435,26 +468,22 @@ Each property must be on its own line and indented one level from the selector. 
 
 
 
-<a name="vendor-prefixed-properties"></a>
-### Vendor-Prefixed Properties
+<a name="no-vendor-prefixed-properties"></a>
+### No Vendor-Prefixed Properties
 
-When using vendor-prefixed properties, always use the standard property as well. The standard property must always come after all of the vendor-prefixed versions of the same property (This applies to vendor-prefixed property _values_ as well).
-
-Vendor-prefixed classes should align to the left with all other properties.
+Don't use vendor prefixes like `-webkit-border-radius`, just use the unprefixed form. Autoprefix will be run on all the styles when they are compiled, and necessary prefixed properties will be added to the final output CSS automatically.
 
 ```css
 /* Good */
 .c-directory {
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
   border-radius: 4px;
 }
 
-/* Bad - colons aligned */
+/* Bad */
 .c-directory {
   -webkit-border-radius: 4px;
-     -moz-border-radius: 4px;
-          border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
 }
 ```
 
@@ -462,12 +491,8 @@ Suffix property value pairs that apply only to a particular browser or class of 
 
 ```css
 background: #fcfcfc; /* Old browsers */
-background: -moz-linear-gradient(...); /* FF3.6+ */
-background: -webkit-gradient(...); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(...); /* Chrome10+, Safari5.1+ */
-background: -o-linear-gradient(...); /* Opera 11.10+ */
-background: -ms-linear-gradient(...); /* IE10+ */
-background: linear-gradient(...); /* W3C */
+background: url('fills/texture-1.jpg') /* IE 8- */
+background: url('fills/texture-1.jpg'), url('fills/texture-2.png'); /* W3C */
 ```
 
 Suffix fallback with “Old browsers” and standard property with “W3C”. Add a plus or minus to indicate that a property applies to all previous browsers by the same vendor or all future browsers by the same vendor.
@@ -535,7 +560,7 @@ Do not use !important on CSS properties. The only time this is allowed is in a u
 Extending classes: favor multiple classes over SASS @extend. Favor @mixins over @extends. Really, don't use @extends if you can help it.
 
 ```HTML
-<div class="o-module  c-strand-list  u-closer"> (two spaces between each class)
+<div class="c-module  c-strand-list  u-closer"> (two spaces between each class)
 ```
 
 
@@ -667,17 +692,17 @@ Strings should always use single quotes (never double quotes).
 <a name="urls"></a>
 ### URLs
 
-When using a url() value, always use double quotes around the actual URL.
+When using a url() value, always use single quotes around the actual URL.
 
 ```css
 /* Good */
 .c-header {
-  background: url("img/logo.png");
+  background: url('img/logo.png');
 }
 
-/* Bad - single quotes */
+/* Bad - double quotes */
 .c-header {
-  background: url('img/logo.png');
+  background: url("img/logo.png");
 }
 
 /* Bad - missing quotes */
@@ -703,31 +728,6 @@ input[type='submit'] {}
 /* Bad - missing quotes */
 input[type=submit] {}
 ```
-
-
-
-<a name="internet-explorer-hacks"></a>
-### Internet Explorer Hacks
-
-Only property hacks are allowed. To target Internet Explorer, use Internet Explorer-specific hacks like * and _ in the normal CSS files. Browser specific styles should not be in separate per-browser stylesheets. We prefer to keep all the CSS for a particular object in one place as it is more maintainable. In addition selector hacks should not be used. Classes like .ie6 increase specificity. Hacks should be kept within the CSS rule they affect and only property hacks should be used.
-
-```css
-/* Good */
-.c-assignment {
-  margin: 0;
-  _margin: -1px;
-}
-
-/* Bad - uses selector hacks */
-.c-assignment {
-  margin: 0;
-}
-
-.ie6 .c-assignment {
-   margin: -1px;
-}
-```
-
 
 
 <a name="javascript-and-test-dependence"></a>
@@ -812,16 +812,6 @@ All classnames should have a prefix. Prefixes help insulate new classnames from 
 This is a UI-specific implementation of a design pattern. Editing these styles is
 relatively safe, in that only instances of this component will be affected.
 Examples: Table of Contents, Work Set, Flashcard.
-
-
-<a name="o--object"></a>
-#### o- Object
-
-These are a kind of base class that gets re-used
-by components. DANGER: do not modify these unless you really
-know what you're doing. Could cause all kinds of mischief.
-They are usually based on minor *visual* patterns in the design
-(e.g., media object = "float" an image right without wrapping text)
 
 <a name="is--has--states"></a>
 #### is-, has- States
@@ -978,10 +968,10 @@ Separate multiple classes with TWO spaces for readability:
 
 ```html
 <!-- Good -->
-<div class="o-inline-list  c-tutorial-nav  u-pull-left">
+<div class="c-inline-list  c-tutorial-nav  u-pull-left">
 
 <!-- Bad - don't use single space -->
-<div class="o-inline-list c-tutorial u-pull-left">
+<div class="c-inline-list c-tutorial u-pull-left">
 ```
 
 The classes should follow this order:
