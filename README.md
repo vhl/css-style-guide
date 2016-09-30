@@ -335,14 +335,12 @@ If it is uncertain whether a new class belongs in the library (i.e., will be re-
 
 * Feature styles go in stylesheets/music/features. For any feature that doesn't yet exist as a subfolder, add one for your styles. 
 
-* Feature stylesheets should NOT be included in the main stylesheet; instead, add a stylesheet `<link>` (or a Rails `stylesheet_link_tag`) only to the views that need them.
-
 * Feature style classnames adhere to the same guidelines as any others, just make sure to NEVER give a feature class the same name as a library class.
   * The practice of using `f-` to prefix feature styles has been deprecated. Use `c-` or whatever prefix is applicable.
 
 * Adding a modifier to a class that exists in the library is encouraged: e.g., if `c-module` exists in the library, you can add a style in your "Gradebook v2" feature that defines `c-module--gradebook`, provided that class does not already exist in the library. 
 
-
+* For music v1 only: All feature stylesheets are included in the main stylesheet, so there will no longer be a need to import them on a per view basis.
 
 <a name="coding-style"></a>
 ## Coding Style
