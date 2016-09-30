@@ -27,6 +27,7 @@ The purpose of this document is to provide guidelines for writing CSS. Code conv
     - [Blocks](#blocks)
     - [Elements](#elements)
     - [Modifiers](#modifiers)
+  - [Feature-specific styles](#feature-specific-styles)
 - [Coding Style](#coding-style)
   - [Indentation](#indentation)
   - [Brace Alignment](#brace-alignment)
@@ -179,7 +180,7 @@ Order classnames in a class attribute by order of object inheritance -- order in
 <div class="c-inline-list c-tutorial-nav u-pull-left">
 
 <!-- Bad - not ordered by object inheritance -->
-<div class="c-tutorial-nav  u-pull-left  o-inline-list">
+<div class="c-tutorial-nav  u-pull-left  c-inline-list">
 ```
 
 
@@ -225,8 +226,6 @@ Use single, non-qualified selectors when styling component elements--don't use c
 ## Class Naming Conventions
 
 
-
-
 <a name="all-classnames-should-have-a-prefix"></a>
 ### All classnames should have a prefix
 
@@ -268,13 +267,13 @@ BEM convention (Block, Element, Modifier) uses different delimiters to make it e
 <a name="blocks"></a>
 #### Blocks
 
-A **Block** (The parent element in an object or component) uses hyphens between words. Prefix all class names with the first letter of their type: o- Object, c- Component, l-Layout, u- Utility. See the [README](https://github.com/vhl/music/blob/library/app/assets/stylesheets/music/README.md) in the music gem library for more details.
+A **Block** (The parent element in an object or component) uses hyphens between words. Prefix all class names with the first letter of their type: `c-` Component, `l-` Layout, `u-` Utility. See the [README](https://github.com/vhl/music/blob/library/app/assets/stylesheets/music/README.md) in the music gem library for more details.
 
 ```css
 /* Good */
-.o-list-inline {}
-.o-list-inline__list-item {}
-.c-list-inline--boxy {}
+.c-list-inline {}
+.c-assignment-list__item {}
+.c-list--boxy {}
 
 /* Bad - uses camel case*/
 .u-pullLeft {}
@@ -315,17 +314,30 @@ Modifiers are subclasses, or variants, of a component. They add a suffix to the 
 
 When extending a component and styling the inner elements, use the base component's inner elements' class name for styling, instead of extending the class names of the inner elements as well.
 
+
 ```css
 
 /* Good - modifiers (subclasses) of components refer to unmodified inner element's names */
-.c-list-inline--boxy > .o-list-inline__list-item {}
+.c-assignment-list--boxy > .c-assignment-list__item {}
 
 /* Bad - don't modify inner element's names */
-.c-list-inline--boxy > .c-list-inline__list-item--boxy {}
+.c-assignment-list--boxy > .c-assignment-list__list-item--boxy {}
 
 /* Bad - don't create child elements with the modifier in the name. */
-.c-list-inline--boxy__list-item {}
+.c-assignment-list--boxy__list-item {}
 ```
+
+
+<a name="feature-specific-styles"></a>
+### Feature-specific styles
+
+If it is uncertain whether a new class belongs in the library (i.e., will be re-used, and NEVER changed), then it should be a feature class.
+
+* Feature styles go in stylesheets/music/features. For any feature that doesn't yet exist as a subfolder, add one for your styles. 
+
+* Feature stylesheets should NOT be included in the main stylesheet; instead, add a stylesheet `<link>` (or a Rails `stylesheet_link_tag`) only to the views that need them.
+
+* Feature style classnames adhere to the same guidelines as any others, just make sure to NEVER give a feature class the same name as a library class.
 
 
 
@@ -349,10 +361,10 @@ Each indentation level is made up of two spaces. Do not use tabs. (Please set yo
 .c-message {color: #fff; background-color: #000;}
 ```
 
-```
 In the case of single selector, single property rules, one line is acceptable.
 Leave one space inside the brackets.
 
+```
 /* Fine - one selector, one property */
 .c-alert { font-weight: bold; }
 ```
@@ -902,8 +914,8 @@ We usually refer to these as **base classes**.
 
 ```css
 /* Good */
-.o-list-inline
-.o-list-inline__list-item
+.c-list-inline
+.c-list-inline__list-item
 .c-list-inline--boxy
 
 /* Bad - uses camel case*/
@@ -950,7 +962,7 @@ Use a descendant selector (preferably child '>' ) with the modified base classna
 ```css
 
 /* Good - modifiers (subclasses) of components refer to unmodified inner element's names */
-.c-list-inline--boxy > .o-list-inline__list-item
+.c-list-inline--boxy > .c-list-inline__item
 
 /* Bad - don't modify inner element's names */
 .c-list-inline--boxy > .c-list-inline__list-item--boxy {}
