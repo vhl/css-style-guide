@@ -25,7 +25,6 @@ For more info, see:
 - [Class Naming Conventions](#class-naming-conventions)
   - [All classnames should have a prefix](#all-classnames-should-have-a-prefix)
   - [Use BEM to reflect component structure](#use-bem-to-reflect-component-structure)
-    - [Use Hyphens between words in a block classname](#use-hyphens-between-words-in-a-block-classname)
     - [Blocks](#blocks)
     - [Elements](#elements)
     - [Modifiers](#modifiers)
@@ -73,20 +72,6 @@ Prefixes help insulate BEM classes from any legacy classnames. The different pre
 
 BEM convention (Block, Element, Modifier) uses different delimiters to make it easier to understand the role of an element.
 
-
-<a name="use-hyphens-between-words-in-a-block-classname"></a>
-#### Use Hyphens between words in a block classname
-
-```css
-/* Good */
-.c-data-table {}
-
-/* Bad - uses single underscore. */
-.c_data_table {}
-
-/* Bad - uses camel-case. */
-.c-listInlineBoxy {}
-```
 
 
 <a name="blocks"></a>
