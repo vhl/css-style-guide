@@ -2,6 +2,8 @@
 
 _Coding standards for stylesheets_
 
+Audience: non-CSS developers writing HTML.
+
 Related: **[Live Style Guide](https://m3a.vhlcentral.com/music/style_guide/)** (Components) |  **[Wiki](https://github.com/vhl/music/wiki)** (Concepts)
 
 ## Introduction
@@ -11,6 +13,14 @@ The purpose of this document is to provide guidelines for writing CSS. Code conv
 
 <!-- MarkdownTOC -->
 
+  - [Quick Summary of OOCSS:](#quick-summary-of-oocss)
+- [Class Naming Conventions](#class-naming-conventions)
+  - [All classnames should have a prefix](#all-classnames-should-have-a-prefix)
+  - [Use BEM to reflect component structure](#use-bem-to-reflect-component-structure)
+    - [Use Hyphens between words in a block classname](#use-hyphens-between-words-in-a-block-classname)
+    - [Blocks](#blocks)
+    - [Elements](#elements)
+    - [Modifiers](#modifiers)
 - [Coding Style](#coding-style)
   - [Indentation](#indentation)
   - [Brace Alignment](#brace-alignment)
@@ -23,8 +33,7 @@ The purpose of this document is to provide guidelines for writing CSS. Code conv
   - [Using !important](#using-important)
   - [Using CSS Preprocessors](#using-css-preprocessors)
     - [Keep nesting to 3 levels deep, 4 absolute max.](#keep-nesting-to-3-levels-deep-4-absolute-max)
-    - [Multiple classes:](#multiple-classes)
-    - [Avoid @at-root](#avoid-at-root)
+  - [Separate multiple classes with TWO spaces for readability](#separate-multiple-classes-with-two-spaces-for-readability)
   - [Units](#units)
     - [Do not use units with zero values](#do-not-use-units-with-zero-values)
   - [HEX values](#hex-values)
@@ -36,44 +45,152 @@ The purpose of this document is to provide guidelines for writing CSS. Code conv
   - [Comments](#comments)
 - [Object-Oriented CSS \(OOCSS\)](#object-oriented-css-oocss)
   - [Composition with Multiple Classes](#composition-with-multiple-classes)
-  - [Single Responsibility Principle](#single-responsibility-principle)
-  - [Separate Structure from Skin](#separate-structure-from-skin)
-  - [Separate Containers from Content](#separate-containers-from-content)
-    - [Component Width and Height](#component-width-and-height)
-  - [Element Qualification](#element-qualification)
-  - [Avoid using IDs](#avoid-using-ids)
-  - [Avoid Compound Selectors Whenever Possible](#avoid-compound-selectors-whenever-possible)
-- [Class Naming Conventions](#class-naming-conventions)
-  - [All classnames should have a prefix](#all-classnames-should-have-a-prefix)
+  - [Quick Summary of OOCSS:](#quick-summary-of-oocss-1)
+- [Class Naming Conventions](#class-naming-conventions-1)
+  - [All classnames should have a prefix](#all-classnames-should-have-a-prefix-1)
     - [c- Component](#c--component)
     - [is-, has- States](#is--has--states)
     - [t- Theme](#t--theme)
     - [u- utility](#u--utility)
     - [ns- Namespace.](#ns--namespace)
-    - [_ a Hack.](#-a-hack)
     - [js- Javascript.](#js--javascript)
     - [test- Test.](#test--test)
-    - [s- Scope.](#s--scope)
-  - [Use BEM to reflect component structure](#use-bem-to-reflect-component-structure)
-    - [Use Hyphens between words in a block classname](#use-hyphens-between-words-in-a-block-classname)
-    - [Blocks](#blocks)
-    - [Elements](#elements)
-    - [Modifiers](#modifiers)
+  - [Use BEM to reflect component structure](#use-bem-to-reflect-component-structure-1)
+    - [Use Hyphens between words in a block classname](#use-hyphens-between-words-in-a-block-classname-1)
+    - [Blocks](#blocks-1)
+    - [Elements](#elements-1)
+    - [Modifiers](#modifiers-1)
 - [Feature-specific styles](#feature-specific-styles)
 - [Style Documentation](#style-documentation)
 
 <!-- /MarkdownTOC -->
 
 
+<a name="quick-summary-of-oocss"></a>
+### Quick Summary of OOCSS:
+
+* **Single Responsibility Principle**: A class should do one specific thing.
+* **Separate Structure from Skin**: Basically, use separate classes for Layout vs Style.
+* **Avoid location-based styles**: Descendant selectors should be used sparingly; they should never reach outside the module in question.
+* **Separate Containers from Content**: A component should have no knowledge of its container.
+* **Component Gets its Width from its Container**: Avoid setting explicit widths on components; Grids control width.
+* **Component Gets its Height from its Contents**: Avoid setting explicit heights on components; Content determines height.
+* **Keep specificity Low**: Most selectors should consist of a single class.
+  * **Don't use IDs as CSS selectors**: They are troublesome to override.
+  * **Don't use elements in your selectors**: They limit reuse.
+  * **Avoid too much overriding of styles**: Check the cascade in browser dev tools.
+
+<a name="class-naming-conventions"></a>
+## Class Naming Conventions
 
 
 
 
+<a name="all-classnames-should-have-a-prefix"></a>
+### All classnames should have a prefix
+
+Prefixes help insulate BEM classes from any legacy classnames. The different prefixes are usually a single letter, and are explained in the [music gem documentation](). The system used here is adapted from [SMACSS](https://smacss.com/).
+
+```css
+/* Good */
+.c-breadcrumbs {}
+
+/* Bad - no prefix */
+.breadcrumbs {}
+```
+
+
+
+<a name="use-bem-to-reflect-component-structure"></a>
+### Use BEM to reflect component structure
+
+BEM convention (Block, Element, Modifier) uses different delimiters to make it easier to understand the role of an element.
+
+
+
+<a name="use-hyphens-between-words-in-a-block-classname"></a>
+#### Use Hyphens between words in a block classname
+
+```css
+/* Good */
+.c-data-table {}
+
+/* Bad - uses single underscore. */
+.c_data_table {}
+
+/* Bad - uses camel-case. */
+.c-listInlineBoxy {}
+```
+
+
+
+<a name="blocks"></a>
+#### Blocks
+
+A **Block** (The parent element in an object or component) uses hyphens between words. Prefix all class names with the first letter of their type: o- Object, c- Component, l-Layout, u- Utility. See the [README](https://github.com/vhl/music/blob/library/app/assets/stylesheets/music/README.md) in the music gem library for more details.
+
+```css
+/* Good */
+.o-list-inline {}
+.o-list-inline__list-item {}
+.c-list-inline--boxy {}
+
+/* Bad - uses camel case*/
+.u-pullLeft {}
+
+/* Bad - uses single underscores */
+.c-list_inline {}
+```
+
+
+
+<a name="elements"></a>
+#### Elements
+
+Elements are child elements of a component. They add a suffix to the base name, separated by double underscores.
+
+```css
+/* Good: double underscore */
+.c-list-inline__item {}
+
+/* Bad - looks like a block. */
+.c-list-inline-item {}
+```
+
+
+
+<a name="modifiers"></a>
+#### Modifiers
+
+Modifiers are subclasses, or variants, of a component. They add a suffix to the base name, separated by double hyphens.
+
+```css
+/* Good: double hyphen */
+.c-list-inline--boxy {}
+
+/* Bad - looks like a block. */
+.c-list-inline-boxy {}
+```
+
+When extending a component and styling the inner elements, use the base component's inner elements' class name for styling, instead of extending the class names of the inner elements as well.
+
+```css
+
+/* Good - modifiers (subclasses) of components refer to unmodified inner element's names */
+.c-list-inline--boxy > .o-list-inline__list-item {}
+
+/* Bad - don't modify inner element's names */
+.c-list-inline--boxy > .c-list-inline__list-item--boxy {}
+
+/* Bad - don't create child elements with the modifier in the name. */
+.c-list-inline--boxy__list-item {}
+```
+
+
+
+>>>>>>> Stashed changes
 <a name="coding-style"></a>
 ## Coding Style
-
-Guidelines for CSS code:
-
 
 <a name="indentation"></a>
 ### Indentation
@@ -137,7 +254,6 @@ The opening brace should be on the same line as the last selector in the rule an
 ```
 
 
-
 <a name="selectors"></a>
 ### Selectors
 
@@ -158,7 +274,6 @@ button, input.c-button {
   color: red;
 }
 ```
-
 
 
 <a name="keep-specificity-low"></a>
@@ -211,7 +326,6 @@ Each property must be on its own line and indented one level from the selector. 
 ```
 
 
-
 <a name="no-vendor-prefixed-properties"></a>
 ### No Vendor-Prefixed Properties
 
@@ -240,7 +354,6 @@ background: url('fills/texture-1.jpg'), url('fills/texture-2.png'); /* W3C */
 ```
 
 Suffix fallback with “Old browsers” and standard property with “W3C”. Add a plus or minus to indicate that a property applies to all previous browsers by the same vendor or all future browsers by the same vendor.
-
 
 
 <a name="using-important"></a>
@@ -298,47 +411,20 @@ Do not use !important on CSS properties. The only time this is allowed is in a u
 }
 ```
 
-<a name="multiple-classes"></a>
-#### Multiple classes:
 
-Extending classes: favor multiple classes over SASS @extend. Favor @mixins over @extends. Really, don't use @extends if you can help it.
+<a name="separate-multiple-classes-with-two-spaces-for-readability"></a>
+### Separate multiple classes with TWO spaces for readability
 
-```HTML
-<div class="c-module  c-strand-list  u-closer"> (two spaces between each class)
+```html
+<!-- Good -->
+<div class="c-inline-list  c-tutorial-nav  u-pull-left">
+
+<!-- Bad - don't use single space -->
+<div class="c-inline-list c-tutorial-nav u-pull-left">
+
+<!-- Bad - not ordered by object inheritance -->
+<div class="c-tutorial-nav  u-pull-left  o-inline-list">
 ```
-
-
-When `@include` _is_ used, declare it _before_ other properties:
-
-```css
-/* Bad */
-.c-stubbornella {
-    color: #555;
-    @include company();
-    padding: 2rem;
-}
-
-/* Good */
-.c-stubbornella {
-    @include company();
-    color: #555;
-    padding: 2rem;
-}
-<div class="stubbornella">...</div>
-
-/* Better -- uses multi-class inheritance. */
-.c-stubbornella {
-    color: #555;
-    padding: 2rem;
-}
-<div class="c-company  c-stubbornella">...</div>
-```
-
-<a name="avoid-at-root"></a>
-#### Avoid @at-root
-
-`@at-root` is a special Sass directive that resets the selector. Avoid its use, as it will interefere with our reliance on namespaces on the `<body>`.
-
 
 
 <a name="units"></a>
@@ -346,9 +432,9 @@ When `@include` _is_ used, declare it _before_ other properties:
 
 In general, use mod() -- this is a custom SASS function that provides measures relative to a common standard. The value of mod(1) is 1rem. Rems are like ems, but without cascading problems: if a rem = 16px, you can count on that value anywhere in the page.
 
-In order to keep things in sensible proportions, as well as improve readability, write mod values in whole numbers or fractions, but stick to halves and quarters.
+In order to keep things in sensible proportions, as well as improve readability, write mod values in whole numbers or simple fractions.
 
-Also be sure to put spaces around operators in expressions.
+Put one space on either side of an operator in an expression.
 
 ```css
 /* Good */
@@ -371,7 +457,6 @@ Pixel lengths are discouraged, but not blanket verboten! For little tweaky thing
 Ems should be used very rarely -- example: if you need to add a bit of simulated small-caps inside a heading. We don't care which heading level it is, so we specify it relative to the parent with ems. You wouldn't want to use them on an element that has further levels of hierarchy.
 
 
-
 <a name="do-not-use-units-with-zero-values"></a>
 #### Do not use units with zero values
 
@@ -388,7 +473,6 @@ Zero values do not require named units, omit the “px” or other unit.
    margin: 0px;
 }
 ```
-
 
 
 <a name="hex-values"></a>
@@ -411,7 +495,6 @@ When specifying color values in HEX, use lowercase, and if possible, 3-character
 ```
 
 
-
 <a name="string-literals"></a>
 ### String Literals
 
@@ -430,7 +513,6 @@ Strings should always use single quotes (never double quotes).
   background: transparent url("beachball.png");
 }
 ```
-
 
 
 <a name="urls"></a>
@@ -454,7 +536,6 @@ When using a url() value, always use single quotes around the actual URL.
   background: url(img/logo.png);
 }
 ```
-
 
 
 <a name="attribute-values-in-selectors"></a>
@@ -492,7 +573,6 @@ If an item is manipulated by Javascript, it should be have a js- class purposes 
 Likewise, automated tests need a test- class prefix and should select only by that classname, never by styling classes or js- classes.
 
 
-
 <a name="hover-and-focus"></a>
 ### :hover and :focus
 
@@ -510,7 +590,6 @@ a:hover {
    color: green;
 }
 ```
-
 
 
 <a name="comments"></a>
@@ -531,26 +610,18 @@ a:hover {
 ```
 
 
-
-
-
-
-
 <a name="object-oriented-css-oocss"></a>
 ## Object-Oriented CSS (OOCSS)
 
-OOCSS advocates practices which are beneficial to flexibility, code reuse, maintenance, and performance.
-
+OOCSS advocates practices which are beneficial to flexibility, code reuse, maintenance, and performance. For more info, see the [OOCSS wiki](https://github.com/stubbornella/oocss/wiki).
 
 
 <a name="composition-with-multiple-classes"></a>
 ### Composition with Multiple Classes
 
-One of the core ideas of Object-Oriented CSS is using multiple classnames on a single HTML element to synthesize new components from small, modular, focused styles.
+One of the core ideas of Object-Oriented CSS is using multiple classnames on a single HTML element to synthesize new components from small, modular, focused styles. 
 
-Order classnames in a class attribute by order of "inheritance" -- order in the class attribute does not matter functionally, but helps make the inheritance chain more apparent. 
-
-Separate multiple classes with TWO spaces for readability.
+Separate multiple classes with TWO spaces for readability:
 
 ```html
 <!-- Good -->
@@ -570,138 +641,28 @@ The classes should follow this order:
 ```
 
 
+<a name="quick-summary-of-oocss-1"></a>
+### Quick Summary of OOCSS:
+
+* **Single Responsibility Principle**: A class should do one specific thing.
+* **Separate Structure from Skin**: Basically, use separate classes for Layout vs Style.
+* **Avoid location-based styles**: Descendant selectors should be used sparingly; they should never reach outside the module in question.
+* **Separate Containers from Content**: A component should have no knowledge of its container.
+* **Component Gets its Width from its Container**: Avoid setting explicit widths on components; Grids control width.
+* **Component Gets its Height from its Contents**: Avoid setting explicit heights on components; Content determines height.
+* **Keep specificity Low**: Most selectors should consist of a single class.
+  * **Don't use IDs as CSS selectors**: They are troublesome to override.
+  * **Don't use elements in your selectors**: They limit reuse.
+  * **Avoid too much overriding of styles**: Check the cascade in browser dev tools.
 
 
-
-<a name="single-responsibility-principle"></a>
-### Single Responsibility Principle
-
-Classes should focus on a single thing in order to be reusable; classes that are too specific can often be broken up into multiple blocks, or a block and one or more modifiers.
-
-
-
-<a name="separate-structure-from-skin"></a>
-### Separate Structure from Skin
-
-Component base classes (blocks) should provide structure (e.g., grid layout). They solve the hard problems that we encounter again and again.
-
-Skins (modifiers) should determine more cosmetic aspects (color, font, border, background). In some cases there may be a need for cosmetic styles in the base class as well.
-
-
-
-<a name="separate-containers-from-content"></a>
-### Separate Containers from Content
-
-A component should have no knowledge of its container.
-
-Avoid location-based styles:
-
-```css
-/* Bad: location-based (also: ID selector!) */
-.c-score {font-size: 1.1rem;}
-.l-footer .score {font-size: 1.4rem;}
-
-/* Good */
-.c-score {font-size: 1.1rem;}
-.c-score--lg {font-size: 1.4rem;}
-```
-
-`.score--lg` is a modifier that is placed on the same element as `.score`.
-
-
-
-<a name="component-width-and-height"></a>
-#### Component Width and Height
-
-* Containers (grids, modules) dictate the width of their contents.
-  * Avoid setting widths on anything else.
-* Content dictates the height of its container.
-  * Avoid setting heights on containers.
-
-Components should be flexible and their widths controlled by grids.
-
-```css
-/* Good - dimensions unspecified */
-.c-callout {
-  display: block;
-  border: 1px solid #ccc;
-}
-
-/* Bad - dimensions specified */
-.c-callout {
-  display: block;
-  width: 200px;
-  height: 150px;
-  border: 1px solid #ccc;
-}
-```
-
-A couple limited exceptions to this guideline are constraining the size of an image or icon to fix a specific use case or to limit the length of lines of text to improve readability. If possible, only limit one dimension. Proceed carefully when defining dimensions as it limits the flexibility of the UI to adapt to various device screen sizes.
-
-
-
-<a name="element-qualification"></a>
-### Element Qualification
-
-Do not over-qualify class name selectors with an element type unless you are specifying exceptions to the default styling of a particular class. Leaving out the element name makes the class reusable on different kinds of elements.
-
-NOTE: Only use valid HTML5 tags. In come cases, custom tags are passed through from XML, and become part of CSS selectors. They will work fine in supported browsers, but should (eventually) be converted to valid tags with classes. 
-
-```css
-/* Good */
-.c-button-link {}
-
-/* Bad - element name should be omitted */
-span.c-button-link {}
-
-/* Good - element is providing exceptions */
-.c-button-link {}
-span.c-button-link {}
-```
-
-
-
-
-<a name="avoid-using-ids"></a>
-### Avoid using IDs
-
-Selectors should NEVER use HTML element IDs, since they increase specificity and make it difficult to override styles. Always use classes for applying styles.
-
-```css
-/* Good */
-.c-header {
-   height: 100px;
-}
-
-/* Bad - using an ID */
-#column_wrapper {
-   height: 100px;
-}
-```
-
-
-
-
-<a name="avoid-compound-selectors-whenever-possible"></a>
-### Avoid Compound Selectors Whenever Possible
-
-Use single, non-qualified selectors when styling component elements--don't use compound selectors, which will increase specificity, unless absolutely necessary.
-
-```css
-/* Good */
-.c-tabset__tab {}
-
-/* Bad - not necessary; child class is unique enough. */
-.c-tabset > .c-tabset__tab {}
-```
-
-<a name="class-naming-conventions"></a>
+<a name="class-naming-conventions-1"></a>
 ## Class Naming Conventions
 
-<a name="all-classnames-should-have-a-prefix"></a>
+<a name="all-classnames-should-have-a-prefix-1"></a>
 ### All classnames should have a prefix
 
-Prefixes help insulate BEM classes from any legacy classnames. The different prefixes are usually a single letter, and are explained in the [music gem documentation](). The system used here is adapted from [SMACSS](https://smacss.com/).
+Prefixes, along with BEM classnames, help insulate classes from any legacy classnames. The different prefixes are usually a single letter, and are explained in the [music gem documentation](). The system used here is adapted from [SMACSS](https://smacss.com/).
 
 ```css
 /* Good */
@@ -712,12 +673,12 @@ Prefixes help insulate BEM classes from any legacy classnames. The different pre
 ```
 
 
-
 <a name="c--component"></a>
 #### c- Component
 This is a UI-specific implementation of a design pattern. Editing these styles is
 relatively safe, in that only instances of this component will be affected.
 Examples: Table of Contents, Work Set, Flashcard.
+
 
 <a name="is--has--states"></a>
 #### is-, has- States
@@ -726,10 +687,12 @@ Specifies that the components currently is in a
 particular (temporary) state. Examples: .is-expanded, .has-lessons,
 .is-published
 
+
 <a name="t--theme"></a>
 #### t- Theme
 
 Set at a high level (body or top of view). Used to switch color palettes and possibly some other SASS variables. We will use a theme as part of SuperSite vs Portales differentiation.
+
 
 <a name="u--utility"></a>
 #### u- utility
@@ -740,47 +703,32 @@ are defined with a single style rule. You shouldn't be using these a lot.
 These styles should not be changed, since they will have side-effects in
 unpredictable places.
 
+
 <a name="ns--namespace"></a>
 #### ns- Namespace.
 
 `ns-newcsslib` is used to insulate pages or sections so that styles from this library apply there, but not anywhere else. Any other namespace classes should be used extremely sparingly. They are meant to be temporary.
 
 
-<a name="-a-hack"></a>
-#### _ a Hack.
-
-Used sparingly for cross-browser compatibility. Example:
-
-```CSS
-._media {zoom:1} /* Gives element 'has-layout' in IE */
-```
-
 <a name="js--javascript"></a>
 #### js- Javascript.
 
 Used for scripting hooks only. Scripts should not make reference to any other classes.
+
 
 <a name="test--test"></a>
 #### test- Test.
 
 Used for automated testing hooks only. Test scripts should not make reference to any other classes.
 
-<a name="s--scope"></a>
-#### s- Scope.
 
-Resets all the styles for a given context, by brute force. Would only be used in very specific scenarios. We're not using this currently.
-
-
-
-
-
-<a name="use-bem-to-reflect-component-structure"></a>
+<a name="use-bem-to-reflect-component-structure-1"></a>
 ### Use BEM to reflect component structure
 
 BEM convention (Block, Element, Modifier) uses different delimiters to make it easier to understand the role of an element.
  
 
-<a name="use-hyphens-between-words-in-a-block-classname"></a>
+<a name="use-hyphens-between-words-in-a-block-classname-1"></a>
 #### Use Hyphens between words in a block classname
  
 ```css
@@ -794,15 +742,13 @@ BEM convention (Block, Element, Modifier) uses different delimiters to make it e
 .c-listInlineBoxy {}
 ```
  
- 
 
-<a name="blocks"></a>
+<a name="blocks-1"></a>
 #### Blocks
 
 A **Block** (The parent element of a component) uses hyphens between words. [Prefix all class names](#all-classnames-should-have-a-prefix).
 
 We usually refer to these as **base classes**.
-
 
 ```css
 /* Good */
@@ -818,8 +764,7 @@ We usually refer to these as **base classes**.
 ```
 
 
-
-<a name="elements"></a>
+<a name="elements-1"></a>
 #### Elements
 
 Elements are child elements of a component. They add a suffix to the base name, separated by double underscores.
@@ -832,9 +777,8 @@ Elements are child elements of a component. They add a suffix to the base name, 
 .c-list-inline-item {}
 ```
  
- 
 
-<a name="modifiers"></a>
+<a name="modifiers-1"></a>
 #### Modifiers
  
 Modifiers are "subclasses", or variants, of a component. They add a suffix to the base name, separated by double hyphens.
@@ -867,7 +811,6 @@ Use a descendant selector (preferably direct child `>` ) with the modified base 
 <a name="feature-specific-styles"></a>
 ## Feature-specific styles
  
-
 If it is uncertain whether a new class belongs in the library (i.e., will be re-used, and NEVER changed), then it should be a feature class.
  
 * Feature styles go in stylesheets/music/features. For any feature that doesn't yet exist as a subfolder, add one for your styles. 
@@ -879,9 +822,6 @@ If it is uncertain whether a new class belongs in the library (i.e., will be re-
 * Adding a modifier to a class that exists in the library is encouraged: e.g., if `c-module` exists in the library, you can add a style in your "Gradebook v2" feature that defines `c-module--gradebook`, provided that class does not already exist in the library. 
  
 * For music v1 only: All feature stylesheets are included in the main stylesheet, so there will no longer be a need to import them on a per view basis.
-
-
-
 
 
 <a name="style-documentation"></a>
