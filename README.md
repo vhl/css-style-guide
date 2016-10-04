@@ -15,6 +15,7 @@ The purpose of this document is to provide guidelines for writing CSS. Code conv
 
 - [Coding Style](#coding-style)
   - [Indentation](#indentation)
+  - [Use Hyphens between words in a classname](#use-hyphens-between-words-in-a-classname)
   - [Brace Alignment](#brace-alignment)
   - [Selectors](#selectors)
     - [One selector per line](#one-selector-per-line)
@@ -35,6 +36,7 @@ The purpose of this document is to provide guidelines for writing CSS. Code conv
   - [Comments](#comments)
   - [Order of classes in HTML](#order-of-classes-in-html)
 - [Adding New Feature-specific Styles](#adding-new-feature-specific-styles)
+- [Style Documentation](#style-documentation)
 
 <!-- /MarkdownTOC -->
 
@@ -77,6 +79,20 @@ Rules inside of `@media` must be indented an additional level.
     color: green;
   }
 }
+```
+
+<a name="use-hyphens-between-words-in-a-classname"></a>
+### Use Hyphens between words in a classname
+
+```css
+/* Good */
+.c-data-table {}
+
+/* Bad - uses single underscore. */
+.c_data_table {}
+
+/* Bad - uses camel-case. */
+.c-listInlineBoxy {}
 ```
 
 
@@ -435,19 +451,79 @@ Base class > modifiers > states > utilities > js hooks > test hooks
 ```
 
 
-
 <a name="adding-new-feature-specific-styles"></a>
 ## Adding New Feature-specific Styles
 
-If you need to add new styles, but them in the /features directory in the music gem. Create a subfolder for your feature if one doesn't exist.
+If you need to add new styles, put them in the /features directory in the music gem. Create a subfolder for your feature if one doesn't exist.
 
 * Feature style classnames adhere to the same guidelines as any others, just make sure to NEVER give a feature class the same name as a library class (Note: the `f-` prefix has been deprecated).
  
 * Adding a modifier to a class that exists in the library is encouraged: e.g., if `c-module` exists in the library, you can add a style in your "Gradebook v2" feature that defines `c-module--grade-detail`, provided that class does not already exist in the library. 
 
-* For features using the existing pre-v1 CSS and layouts: Import your feature stylesheet in your views, then scope your styles by adding a feature namespace class like "ns-gradebook-v2" and prefix all your selectors with it:
+* Scope your styles by adding a feature namespace class like "ns-gradebook-v2" and prefix all your selectors with it. This class should go on the `<body>`.
 
   * Example: `.ns-gradebook-v2 .c-student-name { ... }`
 
+The way feature styles are included depends on which CSS library is being used:
+
+* For features using the existing pre-v1 CSS and layouts: Reference your feature stylesheet in your views.
+
 * For new music v1 features only: All feature stylesheets are included in the main stylesheet, so there will no longer be a need to import them on a per view basis.
 
+
+<a name="style-documentation"></a>
+## Style Documentation
+
+We use multiple strategies to make sure the CSS library is understandable and maintainable:
+
+* SMACSS prefixes indicate different types of objects.
+* BEM classnames make structure clear on both the HTML and CSS sides.
+* Components and other classes are documented in specially formatted comments directly in the CSS/SASS files (see sample below).
+* We use [Hologram](trulia.github.io/hologram/) to auto-generate a [live style guide](//M3-SERVER/music/style_guide) from these comments, which provides a browsable inventory of components, their variants, instructions on how to use them and what they should look like.
+
+```css
+<a name="doc"></a>
+/*doc
+---
+title: Layout Grids
+name: grid
+<a name="category-layout"></a>
+category: Layout
+---
+
+_The body text is ideal for more detailed explanations and
+documentation. It should include a functional example of HTML for the classes in question._
+
+_Be sure to indicate what classes and/or elements are extended by this class:_
+
+Extends `ur-grid`
+
+Extends `<a href>`
+
+
+TODO: This is a todo statement that describes an atomic task to be completed
+  at a later date. It wraps after 80 characters and following lines are
+  indented by 2 spaces.
+*/
+```
+
+In the doc header (the "front matter" between triple hyphens):
+
+* *title* and *category* values should be capitalized.
+* *name* values should be lowercase, with hyphens as word separators. Component docs are sorted by name, so plan accordingly.
+* Don't include class prefixes in titles, names, or categories.
+* Try to keep category names to a single word.
+
+You can organize docs hierarchically by specifying a *parent* instead of a category. Such "child" elements will be listed in alphabetic order below the parent and inherit the parent's category. The parent value should match the *name* of another component.
+
+```css
+<a name="doc-1"></a>
+/*doc
+---
+title: Inner Grid
+name: grid-inner
+<a name="parent-grid"></a>
+parent: grid
+---
+*/
+```
