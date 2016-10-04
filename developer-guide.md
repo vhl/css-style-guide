@@ -18,6 +18,9 @@ For more info, see:
 * [BEM](https://en.bem.info/methodology/).
 * [SMACSS](https://smacss.com/).
 
+----
+
+Table of Contents:
 
 <!-- MarkdownTOC -->
 
