@@ -22,33 +22,28 @@ Table of Contents:
   - [Brace Alignment](#brace-alignment)
   - [Selectors](#selectors)
     - [One selector per line](#one-selector-per-line)
-    - [Keep specificity low.](#keep-specificity-low)
-    - [Keep depth of applicability low.](#keep-depth-of-applicability-low)
-  - [Properties](#properties)
+  - [One Property per Line](#one-property-per-line)
   - [No Vendor-Prefixed Properties](#no-vendor-prefixed-properties)
+  - [Browser workarounds](#browser-workarounds)
   - [Using !important](#using-important)
   - [Separate multiple classes with TWO spaces for readability](#separate-multiple-classes-with-two-spaces-for-readability)
   - [Units](#units)
     - [Do not use units with zero values](#do-not-use-units-with-zero-values)
   - [HEX values](#hex-values)
   - [String Literals](#string-literals)
-  - [URLs](#urls)
-  - [Attribute values in selectors](#attribute-values-in-selectors)
   - [JavaScript and Test Dependence](#javascript-and-test-dependence)
   - [:hover and :focus](#hover-and-focus)
   - [Comments](#comments)
   - [Order of classes in HTML](#order-of-classes-in-html)
-- [Adding New Feature-specific Styles](#adding-new-feature-specific-styles)
-- [Style Documentation](#style-documentation)
 
 <!-- /MarkdownTOC -->
 
 
 
-<a name="coding-style"></a>
+<a id="coding-style"></a>
 ## Coding Style
 
-<a name="indentation"></a>
+<a id="indentation"></a>
 ### Indentation
 
 Each indentation level is made up of two spaces. Do not use tabs. (Please set your editor to use two spaces.)
@@ -56,12 +51,12 @@ Each indentation level is made up of two spaces. Do not use tabs. (Please set yo
 ```css
 /* Good */
 .c-message {
-  color: #fff;
-  background-color: #000;
+  color: $green;
+  background-color: $white;
 }
 
 /* Bad - all on one line */
-.c-message {color: #fff; background-color: #000;}
+.c-message {color: $green; background-color: $white;}
 ```
 
 In the case of single selector, single property rules, one line is acceptable.
@@ -84,7 +79,7 @@ Rules inside of `@media` must be indented an additional level.
 }
 ```
 
-<a name="use-hyphens-between-words-in-a-classname"></a>
+<a id="use-hyphens-between-words-in-a-classname"></a>
 ### Use Hyphens between words in a classname
 
 ```css
@@ -99,7 +94,7 @@ Rules inside of `@media` must be indented an additional level.
 ```
 
 
-<a name="brace-alignment"></a>
+<a id="brace-alignment"></a>
 ### Brace Alignment
 
 The opening brace should be on the same line as the last selector in the rule and should be preceded by a space. The closing brace should be on its own line after the last property and be indented to the same level as the line with the opening brace.
@@ -107,25 +102,25 @@ The opening brace should be on the same line as the last selector in the rule an
 ```css
 /* Good */
 .c-description {
-  color: #fff;
+  color: $white;
 }
 
 /* Bad - closing brace is in the wrong place */
 .c-description {
-  color: #fff;
+  color: $white;
   }
 
 /* Bad - opening brace missing space */
 .c-description{
-  color: #fff;
+  color: $white;
 }
 ```
 
 
-<a name="selectors"></a>
+<a id="selectors"></a>
 ### Selectors
 
-<a name="one-selector-per-line"></a>
+<a id="one-selector-per-line"></a>
 #### One selector per line
 
 Each selector should appear on its own line. The line should break immediately after the comma. Each selector should be aligned to the same left column.
@@ -144,32 +139,9 @@ button, input.c-button {
 ```
 
 
-<a name="keep-specificity-low"></a>
-#### Keep specificity low.
 
-* Type selectors (addressing elements by their tag name) should be defined early in the cascade and then never used again unless absolutely necessary.
-
-* **Selectors consisting of a single class** should make up the majority of your CSS. A second class should generally only be added for states. 
-
-* **NEVER use id's in selectors**. They have very high specificity compared to classes, and can't be used more than once on the same page.
-
-* For the same reason, **NEVER use inline styles**. They are near-impossible to override without resorting to JavaScript.
-
-* It should go without saying, **don't use `!important`** except in rare cases:
-  * Utilities use it to override any previous values.
-  * Overriding any high-specificity styles we don't have control over.
-
-
-<a name="keep-depth-of-applicability-low"></a>
-#### Keep depth of applicability low.
-
-Keep combinators (whitespace, `>`, `+`, `~`,) to a minimum. Favor direct-child combinator (`>`) over descendant (whitespace).
-
-`.c-super-table a {...}` can get you in trouble later when you want to override that link style using `.special` -- better to add a `.c-super-table__link` in the first example to keep both depth of applicability and specificity low. A single class selector can always be overridden by a single class selector later in the cascade.
-
-
-<a name="properties"></a>
-### Properties
+<a id="one-property-per-line"></a>
+### One Property per Line
 
 Each property must be on its own line and indented one level from the selector. There should be no space before the colon and one space after. All properties must end with a semicolon.
 
@@ -194,7 +166,7 @@ Each property must be on its own line and indented one level from the selector. 
 ```
 
 
-<a name="no-vendor-prefixed-properties"></a>
+<a id="no-vendor-prefixed-properties"></a>
 ### No Vendor-Prefixed Properties
 
 Don't use vendor prefixes like `-webkit-border-radius`, just use the unprefixed form. Autoprefix will be run on all the styles when they are compiled, and necessary prefixed properties will be added to the final output CSS automatically.
@@ -213,6 +185,10 @@ Don't use vendor prefixes like `-webkit-border-radius`, just use the unprefixed 
 }
 ```
 
+
+<a id="browser-workarounds"></a>
+### Browser workarounds
+
 Suffix property value pairs that apply only to a particular browser or class of browsers with a comment listing browsers affected.
 
 ```css
@@ -224,10 +200,10 @@ background: url('fills/texture-1.jpg'), url('fills/texture-2.png'); /* W3C */
 Suffix fallback with “Old browsers” and standard property with “W3C”. Add a plus or minus to indicate that a property applies to all previous browsers by the same vendor or all future browsers by the same vendor.
 
 
-<a name="using-important"></a>
+<a id="using-important"></a>
 ### Using !important
 
-Do not use !important on CSS properties. The only time this is allowed is in a u- utility style (provided by Core team).
+Do not use !important on CSS properties. The only time this is allowed is in a u- utility style.
 
 ```css
 /* Good */
@@ -242,7 +218,7 @@ Do not use !important on CSS properties. The only time this is allowed is in a u
 ```
 
 
-<a name="separate-multiple-classes-with-two-spaces-for-readability"></a>
+<a id="separate-multiple-classes-with-two-spaces-for-readability"></a>
 ### Separate multiple classes with TWO spaces for readability
 
 ```html
@@ -257,10 +233,12 @@ Do not use !important on CSS properties. The only time this is allowed is in a u
 ```
 
 
-<a name="units"></a>
+<a id="units"></a>
 ### Units
 
-In general, use mod() -- this is a custom SASS function that provides measures relative to a common standard. The value of mod(1) is 1rem. Rems are like ems, but without cascading problems: if a rem = 16px, you can count on that value anywhere in the page.
+In general, use `mod()` -- this is a custom SASS function that provides measures relative to a common standard. The value of `mod(1)` is `1rem`. Rems are like ems, but without cascading problems: if a rem = 16px, you can count on that value anywhere in the page.
+
+If it makes more sense to specify lengths in pixels, use `rpx()` -- this function abstracts pixels into fractional rems (assuming `1rem` = `16px`) and like `rem` and `mod()`, makes sure if the user changes the font size in their browser settings, everything will scale.
 
 In order to keep things in sensible proportions, as well as improve readability, write mod values in whole numbers or simple fractions.
 
@@ -280,14 +258,12 @@ padding: 1rem;
 padding: mod(3/5);
 ```
 
-mod() should be used for all margins, padding, gutters, font sizes, etc.
-
-Pixel lengths are discouraged, but not blanket verboten! For little tweaky things like box-shadow offsets or `margin: -1px`, they are fine.
+`mod()` should be used for all margins, padding, gutters, font sizes, etc.
 
 Ems should be used very rarely -- example: if you need to add a bit of simulated small-caps inside a heading. We don't care which heading level it is, so we specify it relative to the parent with ems. You wouldn't want to use them on an element that has further levels of hierarchy.
 
 
-<a name="do-not-use-units-with-zero-values"></a>
+<a id="do-not-use-units-with-zero-values"></a>
 #### Do not use units with zero values
 
 Zero values do not require named units, omit the “px” or other unit.
@@ -305,7 +281,7 @@ Zero values do not require named units, omit the “px” or other unit.
 ```
 
 
-<a name="hex-values"></a>
+<a id="hex-values"></a>
 ### HEX values
 
 When specifying color values in HEX, use lowercase, and if possible, 3-character shorthand:
@@ -325,10 +301,10 @@ When specifying color values in HEX, use lowercase, and if possible, 3-character
 ```
 
 
-<a name="string-literals"></a>
+<a id="string-literals"></a>
 ### String Literals
 
-Strings should always use single quotes (never double quotes).
+Strings should always use single quotes (never double quotes). This includes URL values.
 
 ```css
 /* Good: single quotes */
@@ -345,47 +321,7 @@ Strings should always use single quotes (never double quotes).
 ```
 
 
-<a name="urls"></a>
-### URLs
-
-When using a url() value, always use single quotes around the actual URL.
-
-```css
-/* Good */
-.c-header {
-  background: url('img/logo.png');
-}
-
-/* Bad - double quotes */
-.c-header {
-  background: url("img/logo.png");
-}
-
-/* Bad - missing quotes */
-.c-header {
-  background: url(img/logo.png);
-}
-```
-
-
-<a name="attribute-values-in-selectors"></a>
-### Attribute values in selectors
-
-Use double quotes around attribute values.
-
-```css
-/* Good */
-input[type="submit"] {}
-
-/* Bad - using single quote */
-input[type='submit'] {}
-
-/* Bad - missing quotes */
-input[type=submit] {}
-```
-
-
-<a name="javascript-and-test-dependence"></a>
+<a id="javascript-and-test-dependence"></a>
 ### JavaScript and Test Dependence
 
 If an item is manipulated by Javascript, it should be have a js- class purposes of selecting that element. Javascript should only query elements by js- classes. CSS should not use js- classnames in its selectors.
@@ -403,10 +339,12 @@ If an item is manipulated by Javascript, it should be have a js- class purposes 
 Likewise, automated tests need a test- class prefix and should select only by that classname, never by styling classes or js- classes.
 
 
-<a name="hover-and-focus"></a>
+<a id="hover-and-focus"></a>
 ### :hover and :focus
 
 If :hover pseudo class is styled, :focus should also be styled for accessibility. Focus styles should never be removed entirely from any focusable element.
+
+NOTE -- there are default focus styles in our library which should already cover most components.
 
 ```css
 /* Good */
@@ -422,7 +360,7 @@ a:hover {
 ```
 
 
-<a name="comments"></a>
+<a id="comments"></a>
 ### Comments
 
 ```css
@@ -440,7 +378,7 @@ a:hover {
 ```
 
 
-<a name="order-of-classes-in-html"></a>
+<a id="order-of-classes-in-html"></a>
 ### Order of classes in HTML
 
 Classes should generally go in this order:
@@ -451,82 +389,4 @@ Base class > modifiers > states > utilities > js hooks > test hooks
 <div class="c-strand  c-strand--toc">
 <div class="c-flashcard  c-flashcard--speech-rec  is-flipped">
 <div class="c-module  c-module--dashboard  is-selected  u-pad-0  js-module  test-calendar">
-```
-
-
-<a name="adding-new-feature-specific-styles"></a>
-## Adding New Feature-specific Styles
-
-If you need to add new styles, put them in the /features directory in the music gem. Create a subfolder for your feature if one doesn't exist.
-
-* Feature style classnames adhere to the same guidelines as any others, just make sure to NEVER give a feature class the same name as a library class (Note: the `f-` prefix has been deprecated).
- 
-* Adding a modifier to a class that exists in the library is encouraged: e.g., if `c-module` exists in the library, you can add a style in your "Gradebook v2" feature that defines `c-module--grade-detail`, provided that class does not already exist in the library. 
-
-* Scope your styles by adding a feature namespace class like "ns-gradebook-v2" and prefix all your selectors with it. This class should go on the `<body>`.
-
-  * Example: `.ns-gradebook-v2 .c-student-name { ... }`
-
-The way feature styles are included depends on which CSS library is being used:
-
-* For features using the existing pre-v1 CSS and layouts: Reference your feature stylesheet in your views.
-
-* For new music v1 features only: All feature stylesheets are included in the main stylesheet, so there will no longer be a need to import them on a per view basis.
-
-
-<a name="style-documentation"></a>
-## Style Documentation
-
-We use multiple strategies to make sure the CSS library is understandable and maintainable:
-
-* SMACSS prefixes indicate different types of objects.
-* BEM classnames make structure clear on both the HTML and CSS sides.
-* Components and other classes are documented in specially formatted comments directly in the CSS/SASS files (see sample below).
-* We use [Hologram](trulia.github.io/hologram/) to auto-generate a [live style guide](//M3-SERVER/music/style_guide) from these comments, which provides a browsable inventory of components, their variants, instructions on how to use them and what they should look like.
-
-```css
-<a name="doc"></a>
-/*doc
----
-title: Layout Grids
-name: grid
-<a name="category-layout"></a>
-category: Layout
----
-
-_The body text is ideal for more detailed explanations and
-documentation. It should include a functional example of HTML for the classes in question._
-
-_Be sure to indicate what classes and/or elements are extended by this class:_
-
-Extends `ur-grid`
-
-Extends `<a href>`
-
-
-TODO: This is a todo statement that describes an atomic task to be completed
-  at a later date. It wraps after 80 characters and following lines are
-  indented by 2 spaces.
-*/
-```
-
-In the doc header (the "front matter" between triple hyphens):
-
-* *title* and *category* values should be capitalized.
-* *name* values should be lowercase, with hyphens as word separators. Component docs are sorted by name, so plan accordingly.
-* Don't include class prefixes in titles, names, or categories.
-* Try to keep category names to a single word.
-
-You can organize docs hierarchically by specifying a *parent* instead of a category. Such "child" elements will be listed in alphabetic order below the parent and inherit the parent's category. The parent value should match the *name* of another component.
-
-```css
-<a name="doc-1"></a>
-/*doc
----
-title: Inner Grid
-name: grid-inner
-<a name="parent-grid"></a>
-parent: grid
----
-*/
 ```
